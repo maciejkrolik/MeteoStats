@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maciejkrolik.meteostats.model.StationMeasurementList;
 import com.maciejkrolik.meteostats.service.GdanskWatersClient;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,6 +23,8 @@ public class StationDetailsActivity extends AppCompatActivity {
     private String stationName;
     private int stationNumber;
 
+    private TextView resultTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +35,8 @@ public class StationDetailsActivity extends AppCompatActivity {
         stationNumber = intent.getIntExtra(StationListActivity.STATION_NUMBER_MESSAGE, -1);
 
         setTitle(stationName);
+
+        resultTextView = findViewById(R.id.result_details_text_view);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://pomiary.gdanskiewody.pl")
@@ -46,8 +52,16 @@ public class StationDetailsActivity extends AppCompatActivity {
                 StationMeasurementList stationMeasurementList = response.body();
 
                 if (stationMeasurementList != null) {
-                    Log.d("TEST", stationMeasurementList.getMessage());
-                    Log.d("TEST", stationMeasurementList.getData().get(0).get(1));
+
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (List<String> measurement : stationMeasurementList.getData()) {
+                        stringBuilder.append(measurement.get(0));
+                        stringBuilder.append(" - ");
+                        stringBuilder.append(measurement.get(1));
+                        stringBuilder.append("\n");
+                    }
+                    resultTextView.setText(stringBuilder.toString());
+
                 } else {
                     Toast.makeText(StationDetailsActivity.this, "Błąd pobranych danych!",
                             Toast.LENGTH_SHORT).show();
@@ -62,9 +76,5 @@ public class StationDetailsActivity extends AppCompatActivity {
                         "Coś poszło nie tak!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public void OnDownloadDetailsButtonClick(View view) {
-
     }
 }

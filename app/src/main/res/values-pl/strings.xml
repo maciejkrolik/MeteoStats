@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Ustawienia</string>
+    <string name="nav_header_desc">Tytuł nawigacyjny</string>
+    <string name="navigation_drawer_open">Otwórz pasek nawigacyjny</string>
+    <string name="navigation_drawer_close">Zamknij pasek nawigacyjny</string>
+</resources>

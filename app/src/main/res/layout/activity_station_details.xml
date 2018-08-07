@@ -5,11 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".StationDetailsActivity">
 
-    <Button
-        android:id="@+id/download_details_button"
+    <TextView
+        android:id="@+id/result_details_text_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="OnDownloadDetailsButtonClick"
-        android:text="Pobierz" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.maciejkrolik.meteostats;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,9 @@ import android.widget.Toast;
 import com.maciejkrolik.meteostats.model.StationMeasurementList;
 import com.maciejkrolik.meteostats.service.GdanskWatersClient;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,13 +42,18 @@ public class StationDetailsActivity extends AppCompatActivity {
 
         resultTextView = findViewById(R.id.result_details_text_view);
 
+        Date date = Calendar.getInstance().getTime();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = simpleDateFormat.format(date);
+        Log.d("TEST", dateString);
+
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://pomiary.gdanskiewody.pl")
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
 
         GdanskWatersClient client = retrofit.create(GdanskWatersClient.class);
-        Call<StationMeasurementList> call = client.getMeasurement(stationNumber, "rain", "2018-08-07");
+        Call<StationMeasurementList> call = client.getMeasurement(stationNumber, "rain", dateString);
 
         call.enqueue(new Callback<StationMeasurementList>() {
             @Override

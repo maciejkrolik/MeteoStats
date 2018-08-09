@@ -6,4 +6,9 @@
     <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="nav_rain">Rain</string>
+    <string name="nav_wind">Wind</string>
+    <string name="nav_water">Water</string>
+    <string name="retrofit_error_message">Something went wrong!</string>
+    <string name="retrofit_data_error_message">Error with downloaded data!</string>
 </resources>

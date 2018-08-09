@@ -1,4 +1,4 @@
-package com.maciejkrolik.meteostats;
+package com.maciejkrolik.meteostats.ui.stationlist;
 
 public interface OnStationClickListener {
 

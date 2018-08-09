@@ -4,4 +4,9 @@
     <string name="nav_header_desc">Tytuł nawigacyjny</string>
     <string name="navigation_drawer_open">Otwórz pasek nawigacyjny</string>
     <string name="navigation_drawer_close">Zamknij pasek nawigacyjny</string>
+    <string name="nav_rain">Deszcz</string>
+    <string name="nav_wind">Wiatr</string>
+    <string name="nav_water">Opad</string>
+    <string name="retrofit_error_message">Coś poszło nie tak!</string>
+    <string name="retrofit_data_error_message">Błąd pobranych danych!</string>
 </resources>

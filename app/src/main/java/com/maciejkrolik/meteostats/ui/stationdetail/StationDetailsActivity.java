@@ -1,4 +1,4 @@
-package com.maciejkrolik.meteostats;
+package com.maciejkrolik.meteostats.ui.stationdetail;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,8 +8,10 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.model.StationMeasurementList;
 import com.maciejkrolik.meteostats.service.GdanskWatersClient;
+import com.maciejkrolik.meteostats.ui.stationlist.StationListActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,9 +45,9 @@ public class StationDetailsActivity extends AppCompatActivity {
         resultTextView = findViewById(R.id.result_details_text_view);
 
         Date date = Calendar.getInstance().getTime();
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat =
+                new SimpleDateFormat("yyyy-MM-dd");
         String dateString = simpleDateFormat.format(date);
-        Log.d("TEST", dateString);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://pomiary.gdanskiewody.pl")
@@ -72,7 +74,8 @@ public class StationDetailsActivity extends AppCompatActivity {
                     resultTextView.setText(stringBuilder.toString());
 
                 } else {
-                    Toast.makeText(StationDetailsActivity.this, "Błąd pobranych danych!",
+                    Toast.makeText(StationDetailsActivity.this,
+                            R.string.retrofit_data_error_message,
                             Toast.LENGTH_SHORT).show();
                 }
 
@@ -82,7 +85,7 @@ public class StationDetailsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<StationMeasurementList> call, Throwable t) {
                 Toast.makeText(StationDetailsActivity.this,
-                        "Coś poszło nie tak!", Toast.LENGTH_SHORT).show();
+                        R.string.retrofit_error_message, Toast.LENGTH_SHORT).show();
             }
         });
     }

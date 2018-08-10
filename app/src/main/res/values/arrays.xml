@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="dialog_sort_options">
+        <item>@string/nav_rain</item>
+        <item>@string/nav_water</item>
+        <item>@string/nav_wind</item>
+    </array>
+</resources>

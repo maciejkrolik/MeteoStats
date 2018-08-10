@@ -9,8 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maciejkrolik.meteostats.R;
-import com.maciejkrolik.meteostats.model.StationMeasurementList;
-import com.maciejkrolik.meteostats.service.GdanskWatersClient;
+import com.maciejkrolik.meteostats.data.model.StationMeasurementList;
+import com.maciejkrolik.meteostats.data.service.GdanskWatersClient;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListActivity;
 
 import java.text.SimpleDateFormat;

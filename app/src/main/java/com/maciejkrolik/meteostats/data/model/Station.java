@@ -1,4 +1,4 @@
-package com.maciejkrolik.meteostats.model;
+package com.maciejkrolik.meteostats.data.model;
 
 public class Station {
 

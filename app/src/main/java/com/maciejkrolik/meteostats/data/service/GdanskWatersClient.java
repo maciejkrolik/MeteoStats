@@ -1,7 +1,7 @@
-package com.maciejkrolik.meteostats.service;
+package com.maciejkrolik.meteostats.data.service;
 
-import com.maciejkrolik.meteostats.model.StationList;
-import com.maciejkrolik.meteostats.model.StationMeasurementList;
+import com.maciejkrolik.meteostats.data.model.StationList;
+import com.maciejkrolik.meteostats.data.model.StationMeasurementList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

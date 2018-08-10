@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,9 +20,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.maciejkrolik.meteostats.R;
-import com.maciejkrolik.meteostats.model.Station;
-import com.maciejkrolik.meteostats.model.StationList;
-import com.maciejkrolik.meteostats.service.GdanskWatersClient;
+import com.maciejkrolik.meteostats.data.model.Station;
+import com.maciejkrolik.meteostats.data.model.StationList;
+import com.maciejkrolik.meteostats.data.service.GdanskWatersClient;
 import com.maciejkrolik.meteostats.ui.stationdetail.StationDetailsActivity;
 
 import java.util.ArrayList;
@@ -138,8 +139,8 @@ public class StationListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_sort_dialog) {
+            showSortingDialog();
         }
 
         return super.onOptionsItemSelected(item);
@@ -160,7 +161,7 @@ public class StationListActivity extends AppCompatActivity
             }
             adapter.notifyDataSetChanged();
 
-        } else if (id == R.string.nav_water) {
+        } else if (id == R.id.nav_water) {
             visibleStations.clear();
             for (Station station : allStations) {
                 if (station.isWater()) {
@@ -193,5 +194,10 @@ public class StationListActivity extends AppCompatActivity
         intent.putExtra(STATION_NAME_MESSAGE, stationName);
         intent.putExtra(STATION_NUMBER_MESSAGE, stationNumber);
         startActivity(intent);
+    }
+
+    private void showSortingDialog() {
+        DialogFragment fragment = new SortStationListDialogFragment();
+        fragment.show(getSupportFragmentManager(), "sorting");
     }
 }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.maciejkrolik.meteostats.R;
-import com.maciejkrolik.meteostats.model.Station;
+import com.maciejkrolik.meteostats.data.model.Station;
 
 import java.util.List;
 

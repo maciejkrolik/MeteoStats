@@ -11,4 +11,7 @@
     <string name="nav_water">Water</string>
     <string name="retrofit_error_message">Something went wrong!</string>
     <string name="retrofit_data_error_message">Error with downloaded data!</string>
+    <string name="dialog_confirm" translatable="false">OK</string>
+    <string name="dialog_sort_title">Choose data</string>
+    <string name="action_sorting">Sort</string>
 </resources>

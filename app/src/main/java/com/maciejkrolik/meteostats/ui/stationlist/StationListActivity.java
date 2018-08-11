@@ -1,7 +1,9 @@
 package com.maciejkrolik.meteostats.ui.stationlist;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -40,9 +42,7 @@ public class StationListActivity extends AppCompatActivity
     public static final String STATION_NAME_MESSAGE = "com.maciejkrolik.meteostats.STATION_NAME_MESSAGE";
     public static final String STATION_NUMBER_MESSAGE = "com.maciejkrolik.meteostats.STATION_NUMBER_MESSAGE";
 
-    private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
 
     private List<Station> allStations = new ArrayList<>();
     private List<Station> visibleStations = new ArrayList<>();
@@ -69,12 +69,15 @@ public class StationListActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        recyclerView = findViewById(R.id.stations_recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.stations_recycler_view);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new StationListAdapter(visibleStations, this);
         recyclerView.setAdapter(adapter);

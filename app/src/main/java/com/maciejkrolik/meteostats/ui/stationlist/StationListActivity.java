@@ -1,5 +1,6 @@
 package com.maciejkrolik.meteostats.ui.stationlist;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,7 +38,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class StationListActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnStationClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        OnStationClickListener, DialogInterface.OnDismissListener {
 
     public static final String STATION_NAME_MESSAGE = "com.maciejkrolik.meteostats.STATION_NAME_MESSAGE";
     public static final String STATION_NUMBER_MESSAGE = "com.maciejkrolik.meteostats.STATION_NUMBER_MESSAGE";
@@ -69,9 +71,6 @@ public class StationListActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -97,9 +96,7 @@ public class StationListActivity extends AppCompatActivity
 
                 if (stationList != null) {
                     allStations.addAll(stationList.getData());
-                    visibleStations.addAll(allStations);
-                    adapter.notifyDataSetChanged();
-
+                    setChosenStations();
                 } else {
                     Toast.makeText(StationListActivity.this,
                             R.string.retrofit_data_error_message,
@@ -117,6 +114,42 @@ public class StationListActivity extends AppCompatActivity
         });
     }
 
+    private void setChosenStations() {
+        visibleStations.clear();
+        visibleStations.addAll(getChosenStations(allStations));
+        adapter.notifyDataSetChanged();
+    }
+
+    private List<Station> getChosenStations(List<Station> allStations) {
+        List<Station> chosenStations = new ArrayList<>();
+
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (sharedPreferences.getBoolean("show_rain", true)) {
+            for (Station station : allStations) {
+                if (station.isRain()) {
+                    chosenStations.add(station);
+                }
+            }
+        }
+        if (sharedPreferences.getBoolean("show_water", true)) {
+            for (Station station : allStations) {
+                if (station.isWater()) {
+                    chosenStations.add(station);
+                }
+            }
+        }
+        if (sharedPreferences.getBoolean("show_wind", true)) {
+            for (Station station : allStations) {
+                if (station.isWindlevel()) {
+                    chosenStations.add(station);
+                }
+            }
+        }
+        return chosenStations;
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -129,19 +162,14 @@ public class StationListActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.station_list, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_sort_dialog) {
             showSortingDialog();
         }
@@ -149,10 +177,14 @@ public class StationListActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private void showSortingDialog() {
+        DialogFragment fragment = new SortStationListDialogFragment();
+        fragment.show(getSupportFragmentManager(), "sorting");
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_rain) {
@@ -199,8 +231,8 @@ public class StationListActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void showSortingDialog() {
-        DialogFragment fragment = new SortStationListDialogFragment();
-        fragment.show(getSupportFragmentManager(), "sorting");
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        setChosenStations();
     }
 }

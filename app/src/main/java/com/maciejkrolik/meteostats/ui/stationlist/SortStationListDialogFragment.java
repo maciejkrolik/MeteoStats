@@ -1,5 +1,6 @@
 package com.maciejkrolik.meteostats.ui.stationlist;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -31,12 +32,12 @@ public class SortStationListDialogFragment extends DialogFragment {
                 .setMultiChoiceItems(R.array.dialog_sort_options, checkedItems,
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                                if (b) {
-                                    editor.putBoolean(getPreferenceKey(i), true);
+                            public void onClick(DialogInterface dialogInterface, int which, boolean isChecked) {
+                                if (isChecked) {
+                                    editor.putBoolean(getPreferenceKey(which), true);
                                     editor.apply();
-                                } else if (sharedPreferences.getBoolean(getPreferenceKey(i), true)) {
-                                    editor.putBoolean(getPreferenceKey(i), false);
+                                } else if (sharedPreferences.getBoolean(getPreferenceKey(which), true)) {
+                                    editor.putBoolean(getPreferenceKey(which), false);
                                     editor.apply();
                                 }
                             }
@@ -62,5 +63,14 @@ public class SortStationListDialogFragment extends DialogFragment {
                 break;
         }
         return preferenceKey;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        final Activity activity = getActivity();
+        if (activity instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        }
     }
 }

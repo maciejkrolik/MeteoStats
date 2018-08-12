@@ -26,9 +26,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class StationDetailsActivity extends AppCompatActivity {
 
-    private String stationName;
-    private int stationNumber;
-
     private TextView resultTextView;
 
     @Override
@@ -37,8 +34,9 @@ public class StationDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_station_details);
 
         Intent intent = getIntent();
-        stationName = intent.getStringExtra(StationListActivity.STATION_NAME_MESSAGE);
-        stationNumber = intent.getIntExtra(StationListActivity.STATION_NUMBER_MESSAGE, -1);
+        String stationName = intent.getStringExtra(StationListActivity.STATION_NAME_MESSAGE);
+        int stationNumber = intent.getIntExtra(StationListActivity.STATION_NUMBER_MESSAGE, -1);
+        final boolean[] stationData = intent.getBooleanArrayExtra(StationListActivity.STATION_DATA);
 
         setTitle(stationName);
 

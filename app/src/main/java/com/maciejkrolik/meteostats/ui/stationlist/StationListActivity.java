@@ -41,8 +41,12 @@ public class StationListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         OnStationClickListener, DialogInterface.OnDismissListener {
 
-    public static final String STATION_NAME_MESSAGE = "com.maciejkrolik.meteostats.STATION_NAME_MESSAGE";
-    public static final String STATION_NUMBER_MESSAGE = "com.maciejkrolik.meteostats.STATION_NUMBER_MESSAGE";
+    public static final String STATION_NAME_MESSAGE =
+            "com.maciejkrolik.meteostats.ui.stationlist.STATION_NAME_MESSAGE";
+    public static final String STATION_NUMBER_MESSAGE =
+            "com.maciejkrolik.meteostats.ui.stationlist.STATION_NUMBER_MESSAGE";
+    public static final String STATION_DATA =
+            "com.maciejkrolik.meteostats.ui.stationlist.STATION_DATA";
 
     private RecyclerView.Adapter adapter;
 
@@ -225,9 +229,16 @@ public class StationListActivity extends AppCompatActivity
         String stationName = visibleStations.get(position).getName();
         int stationNumber = visibleStations.get(position).getNo();
 
+        boolean[] availableStationData = {
+                visibleStations.get(position).isRain(),
+                visibleStations.get(position).isWater(),
+                visibleStations.get(position).isWindlevel()
+        };
+
         Intent intent = new Intent(this, StationDetailsActivity.class);
         intent.putExtra(STATION_NAME_MESSAGE, stationName);
         intent.putExtra(STATION_NUMBER_MESSAGE, stationNumber);
+        intent.putExtra(STATION_DATA, availableStationData);
         startActivity(intent);
     }
 

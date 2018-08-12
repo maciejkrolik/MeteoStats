@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 
 import com.maciejkrolik.meteostats.R;
+import com.maciejkrolik.meteostats.util.SharedPreferenceUtils;
 
 public class SortStationListDialogFragment extends DialogFragment {
 
@@ -33,36 +34,18 @@ public class SortStationListDialogFragment extends DialogFragment {
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which, boolean isChecked) {
+                                String preferenceKeyOfClickedItem = SharedPreferenceUtils.getPreferenceKey(which);
                                 if (isChecked) {
-                                    editor.putBoolean(getPreferenceKey(which), true);
+                                    editor.putBoolean(preferenceKeyOfClickedItem, true);
                                     editor.apply();
-                                } else if (sharedPreferences.getBoolean(getPreferenceKey(which), true)) {
-                                    editor.putBoolean(getPreferenceKey(which), false);
+                                } else if (sharedPreferences.getBoolean(preferenceKeyOfClickedItem, true)) {
+                                    editor.putBoolean(SharedPreferenceUtils.getPreferenceKey(which), false);
                                     editor.apply();
                                 }
                             }
                         });
 
         return builder.create();
-    }
-
-    private String getPreferenceKey(int i) {
-        String preferenceKey;
-        switch (i) {
-            case 0:
-                preferenceKey = "show_rain";
-                break;
-            case 1:
-                preferenceKey = "show_water";
-                break;
-            case 2:
-                preferenceKey = "show_wind";
-                break;
-            default:
-                preferenceKey = "show_rain";
-                break;
-        }
-        return preferenceKey;
     }
 
     @Override

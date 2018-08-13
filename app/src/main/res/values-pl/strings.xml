@@ -11,4 +11,7 @@
     <string name="retrofit_data_error_message">Błąd pobranych danych!</string>
     <string name="dialog_sort_title">Wybierz dane</string>
     <string name="action_sorting">Sortuj</string>
+    <string name="nav_all_stations">Wszystkie stacje</string>
+    <string name="nav_favorite_stations">Ulubione</string>
+    <string name="nav_about">O aplikacji</string>
 </resources>

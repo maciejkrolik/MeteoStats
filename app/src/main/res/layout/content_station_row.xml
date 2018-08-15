@@ -10,6 +10,6 @@
         android:id="@+id/test_text_value"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:text="Warszawska" />
+        tools:text="Szadólki / ZUT" />
 
 </LinearLayout>

@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementList;
 import com.maciejkrolik.meteostats.data.service.GdanskWatersClient;
-import com.maciejkrolik.meteostats.ui.stationlist.StationListActivity;
+import com.maciejkrolik.meteostats.ui.stationlist.AllStationsListFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,9 +34,9 @@ public class StationDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_station_details);
 
         Intent intent = getIntent();
-        String stationName = intent.getStringExtra(StationListActivity.STATION_NAME_MESSAGE);
-        int stationNumber = intent.getIntExtra(StationListActivity.STATION_NUMBER_MESSAGE, -1);
-        final boolean[] stationData = intent.getBooleanArrayExtra(StationListActivity.STATION_DATA);
+        String stationName = intent.getStringExtra(AllStationsListFragment.STATION_NAME_MESSAGE);
+        int stationNumber = intent.getIntExtra(AllStationsListFragment.STATION_NUMBER_MESSAGE, -1);
+        final boolean[] stationData = intent.getBooleanArrayExtra(AllStationsListFragment.STATION_DATA);
 
         setTitle(stationName);
 

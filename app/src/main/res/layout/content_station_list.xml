@@ -9,9 +9,4 @@
     tools:context=".ui.stationlist.StationListActivity"
     tools:showIn="@layout/app_bar_station_list">
 
-    <!--<android.support.v7.widget.RecyclerView-->
-    <!--android:id="@+id/stations_recycler_view"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent" />-->
-
 </FrameLayout>

@@ -6,7 +6,7 @@ public class Station {
     private String name;
     private boolean rain;
     private boolean water;
-    private boolean windir;
+    private boolean winddir;
     private boolean windlevel;
 
     public int getNo() {
@@ -25,8 +25,8 @@ public class Station {
         return water;
     }
 
-    public boolean isWindir() {
-        return windir;
+    public boolean isWinddir() {
+        return winddir;
     }
 
     public boolean isWindlevel() {

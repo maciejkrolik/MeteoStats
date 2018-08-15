@@ -25,7 +25,8 @@ public class SortStationListDialogFragment extends DialogFragment {
         boolean[] checkedItems = {
                 sharedPreferences.getBoolean("show_rain", true),
                 sharedPreferences.getBoolean("show_water", true),
-                sharedPreferences.getBoolean("show_wind", true)
+                sharedPreferences.getBoolean("show_winddir", true),
+                sharedPreferences.getBoolean("show_windlevel", true)
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

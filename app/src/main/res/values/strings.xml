@@ -5,9 +5,10 @@
     <string name="nav_header_title" translatable="false">MeteoStats</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="nav_rain">Rain</string>
-    <string name="nav_wind">Wind</string>
-    <string name="nav_water">Water</string>
+    <string name="nav_rain">Rainfall</string>
+    <string name="nav_windlevel">Wind force</string>
+    <string name="nav_winddir">Wind direction</string>
+    <string name="nav_water">Water level</string>
     <string name="retrofit_error_message">Something went wrong!</string>
     <string name="retrofit_data_error_message">Error with downloaded data!</string>
     <string name="dialog_confirm" translatable="false">OK</string>
@@ -16,4 +17,7 @@
     <string name="nav_all_stations">All stations</string>
     <string name="nav_favorite_stations">Favorites</string>
     <string name="nav_about">About</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

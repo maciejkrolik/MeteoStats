@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.maciejkrolik.meteostats.R;
+import com.maciejkrolik.meteostats.ui.about.AboutFragment;
 
 public class StationListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DialogInterface.OnDismissListener {
@@ -84,10 +85,18 @@ public class StationListActivity extends AppCompatActivity
 
         if (id == R.id.nav_favorite_stations) {
 
+
         } else if (id == R.id.nav_all_stations_list) {
+            AllStationsListFragment fragment = new AllStationsListFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_station_list, fragment)
+                    .commit();
 
         } else if (id == R.id.nav_about) {
-
+            AboutFragment fragment = new AboutFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_station_list, fragment)
+                    .commit();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

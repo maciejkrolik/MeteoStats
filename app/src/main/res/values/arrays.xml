@@ -3,6 +3,7 @@
     <array name="dialog_sort_options">
         <item>@string/nav_rain</item>
         <item>@string/nav_water</item>
-        <item>@string/nav_wind</item>
+        <item>@string/nav_winddir</item>
+        <item>@string/nav_windlevel</item>
     </array>
 </resources>

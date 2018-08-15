@@ -12,7 +12,10 @@ public class SharedPreferenceUtils {
                 preferenceKey = "show_water";
                 break;
             case 2:
-                preferenceKey = "show_wind";
+                preferenceKey = "show_winddir";
+                break;
+            case 3:
+                preferenceKey = "show_windlevel";
                 break;
             default:
                 preferenceKey = "show_rain";

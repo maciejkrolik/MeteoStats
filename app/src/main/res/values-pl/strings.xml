@@ -4,9 +4,8 @@
     <string name="nav_header_desc">Tytuł nawigacyjny</string>
     <string name="navigation_drawer_open">Otwórz pasek nawigacyjny</string>
     <string name="navigation_drawer_close">Zamknij pasek nawigacyjny</string>
-    <string name="nav_rain">Deszcz</string>
-    <string name="nav_wind">Wiatr</string>
-    <string name="nav_water">Opad</string>
+    <string name="nav_rain">Opad</string>
+    <string name="nav_water">Poziom wody</string>
     <string name="retrofit_error_message">Coś poszło nie tak!</string>
     <string name="retrofit_data_error_message">Błąd pobranych danych!</string>
     <string name="dialog_sort_title">Wybierz dane</string>
@@ -14,4 +13,6 @@
     <string name="nav_all_stations">Wszystkie stacje</string>
     <string name="nav_favorite_stations">Ulubione</string>
     <string name="nav_about">O aplikacji</string>
+    <string name="nav_windlevel">Siła wiatru</string>
+    <string name="nav_winddir">Kierunek wiatru</string>
 </resources>

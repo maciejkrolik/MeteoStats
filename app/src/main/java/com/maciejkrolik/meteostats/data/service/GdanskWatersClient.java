@@ -12,7 +12,7 @@ public interface GdanskWatersClient {
     @GET("/rest/stations")
     Call<StationList> listStations();
 
-    @GET("/rest/measurments/{stationNumber}/{measurementSymbol}/{date}")
+    @GET("/rest/measurements/{stationNumber}/{measurementSymbol}/{date}")
     Call<StationMeasurementList> getMeasurement(@Path("stationNumber") int stationNumber,
                                                 @Path("measurementSymbol") String measurementSymbol,
                                                 @Path("date") String date);

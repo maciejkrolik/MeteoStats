@@ -48,7 +48,8 @@ public class AllStationsListFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_all_stations_list, container, false);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.stations_recycler_view);
@@ -108,21 +109,32 @@ public class AllStationsListFragment extends Fragment
         if (sharedPreferences.getBoolean("show_rain", true)) {
             for (Station station : allStations) {
                 if (station.isRain()) {
-                    chosenStations.add(station);
+                    if (!chosenStations.contains(station))
+                        chosenStations.add(station);
                 }
             }
         }
         if (sharedPreferences.getBoolean("show_water", true)) {
             for (Station station : allStations) {
                 if (station.isWater()) {
-                    chosenStations.add(station);
+                    if (!chosenStations.contains(station))
+                        chosenStations.add(station);
                 }
             }
         }
-        if (sharedPreferences.getBoolean("show_wind", true)) {
+        if (sharedPreferences.getBoolean("show_winddir", true)) {
+            for (Station station : allStations) {
+                if (station.isWinddir()) {
+                    if (!chosenStations.contains(station))
+                        chosenStations.add(station);
+                }
+            }
+        }
+        if (sharedPreferences.getBoolean("show_windlevel", true)) {
             for (Station station : allStations) {
                 if (station.isWindlevel()) {
-                    chosenStations.add(station);
+                    if (!chosenStations.contains(station))
+                        chosenStations.add(station);
                 }
             }
         }
@@ -137,6 +149,7 @@ public class AllStationsListFragment extends Fragment
         boolean[] availableStationData = {
                 visibleStations.get(position).isRain(),
                 visibleStations.get(position).isWater(),
+                visibleStations.get(position).isWinddir(),
                 visibleStations.get(position).isWindlevel()
         };
 

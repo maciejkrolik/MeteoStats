@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementList;
 import com.maciejkrolik.meteostats.data.service.GdanskWatersClient;
+import com.maciejkrolik.meteostats.ui.stationlist.AllStationsListFragment;
 import com.maciejkrolik.meteostats.util.DateUtils;
 
 import java.util.List;
@@ -32,9 +33,9 @@ public class RainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_rain, container, false);
-        rainDataTextView = rootView.findViewById(R.id.rain_data_text_view);
-        int stationNumber = getArguments().getInt("stationNumber");
+        View rootView = inflater.inflate(R.layout.fragment_weather_data, container, false);
+        rainDataTextView = rootView.findViewById(R.id.data_text_view);
+        int stationNumber = getArguments().getInt(AllStationsListFragment.STATION_NUMBER_MESSAGE);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://pomiary.gdanskiewody.pl")

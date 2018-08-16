@@ -6,7 +6,7 @@
     tools:context=".ui.stationdetail.RainFragment">
 
     <TextView
-        android:id="@+id/rain_data_text_view"
+        android:id="@+id/data_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:text="Sample data" />

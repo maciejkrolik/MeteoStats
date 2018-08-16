@@ -36,8 +36,8 @@ public class AllStationsListFragment extends Fragment
             "com.maciejkrolik.meteostats.ui.stationlist.STATION_NAME_MESSAGE";
     public static final String STATION_NUMBER_MESSAGE =
             "com.maciejkrolik.meteostats.ui.stationlist.STATION_NUMBER_MESSAGE";
-    public static final String STATION_DATA =
-            "com.maciejkrolik.meteostats.ui.stationlist.STATION_DATA";
+    public static final String STATION_DATA_MESSAGE =
+            "com.maciejkrolik.meteostats.ui.stationlist.STATION_DATA_MESSAGE";
 
     private RecyclerView.Adapter adapter;
 
@@ -156,7 +156,7 @@ public class AllStationsListFragment extends Fragment
         Intent intent = new Intent(getActivity(), StationDetailsActivity.class);
         intent.putExtra(STATION_NAME_MESSAGE, stationName);
         intent.putExtra(STATION_NUMBER_MESSAGE, stationNumber);
-        intent.putExtra(STATION_DATA, availableStationData);
+        intent.putExtra(STATION_DATA_MESSAGE, availableStationData);
         startActivity(intent);
     }
 }

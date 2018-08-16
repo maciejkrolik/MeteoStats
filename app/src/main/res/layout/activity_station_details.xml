@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.stationdetail.StationDetailsActivity">
 
-    <TextView
-        android:id="@+id/result_details_text_view"
+    <FrameLayout
+        android:id="@+id/rain_fragment_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:text="Sample data" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

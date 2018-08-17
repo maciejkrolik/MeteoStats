@@ -46,7 +46,7 @@ public class StationDetailsActivity extends AppCompatActivity {
         if (stationData[3]) {
             WindlevelFragment windlevelFragment = new WindlevelFragment();
             windlevelFragment.setArguments(bundle);
-            fragmentTransaction.add(R.id.winddir_frame_layout, windlevelFragment);
+            fragmentTransaction.add(R.id.windlevel_frame_layout, windlevelFragment);
         }
         fragmentTransaction.commit();
     }

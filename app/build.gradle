@@ -19,11 +19,13 @@ android {
 }
 
 dependencies {
-    //RecyclerView
+    // RecyclerView
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-    //Retrofit and Gson
+    // Retrofit and Gson
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    // MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'

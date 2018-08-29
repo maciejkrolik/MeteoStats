@@ -9,12 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementList;
 import com.maciejkrolik.meteostats.data.service.GdanskWatersClient;
 import com.maciejkrolik.meteostats.ui.stationlist.AllStationsListFragment;
 import com.maciejkrolik.meteostats.util.DateUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RainFragment extends Fragment {
 
     private TextView rainDataTextView;
+    private BarChart barChart;
 
     public RainFragment() {
     }
@@ -35,6 +41,8 @@ public class RainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_weather_data, container, false);
         rainDataTextView = rootView.findViewById(R.id.data_text_view);
+        barChart = rootView.findViewById(R.id.barChart);
+        barChart.setNoDataText("Loading chart...");
         int stationNumber = getArguments().getInt(AllStationsListFragment.STATION_NUMBER_MESSAGE);
 
         Retrofit.Builder builder = new Retrofit.Builder()
@@ -44,7 +52,7 @@ public class RainFragment extends Fragment {
 
         GdanskWatersClient client = retrofit.create(GdanskWatersClient.class);
         Call<StationMeasurementList> call = client.getMeasurement(stationNumber,
-                "rain", DateUtils.getStringDate());
+                "rain", DateUtils.getTodayDateAsString());
 
         call.enqueue(new Callback<StationMeasurementList>() {
             @Override
@@ -61,6 +69,24 @@ public class RainFragment extends Fragment {
                         stringBuilder.append("\n");
                     }
                     rainDataTextView.setText(stringBuilder.toString());
+
+                    List<BarEntry> entries = new ArrayList<>();
+                    int counter = 0;
+                    for (List<String> measurement : stationMeasurementList.getData()) {
+                        float value;
+                        if (measurement.get(1) != null) {
+                            value = Float.parseFloat(measurement.get(1));
+                        } else {
+                            value = 0;
+                        }
+                        entries.add(new BarEntry(counter, value));
+                        counter++;
+                    }
+                    BarDataSet dataSet = new BarDataSet(entries, "Rain");
+
+                    BarData barData = new BarData(dataSet);
+                    barChart.setData(barData);
+                    barChart.invalidate();
 
                 } else {
                     Toast.makeText(getActivity(),

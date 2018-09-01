@@ -89,7 +89,7 @@ public class StationListActivity extends AppCompatActivity
         } else if (id == R.id.nav_all_stations_list) {
             AllStationsListFragment fragment = new AllStationsListFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_station_list, fragment)
+                    .replace(R.id.content_station_list, fragment, "allStationsFragment")
                     .commit();
 
         } else if (id == R.id.nav_about) {

@@ -16,9 +16,11 @@ public class StationDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_station_details);
 
         Intent intent = getIntent();
-        String stationName = intent.getStringExtra(AllStationsListFragment.STATION_NAME_MESSAGE);
-        int stationNumber = intent.getIntExtra(AllStationsListFragment.STATION_NUMBER_MESSAGE, -1);
-        final boolean[] stationData = intent.getBooleanArrayExtra(AllStationsListFragment.STATION_DATA_MESSAGE);
+        final String stationName = intent.getStringExtra(AllStationsListFragment.STATION_NAME_MESSAGE);
+        final int stationNumber =
+                intent.getIntExtra(AllStationsListFragment.STATION_NUMBER_MESSAGE, -1);
+        final boolean[] stationData =
+                intent.getBooleanArrayExtra(AllStationsListFragment.STATION_DATA_MESSAGE);
 
         setTitle(stationName);
 

@@ -37,15 +37,14 @@ public class AllStationsListFragment extends Fragment
     private List<Station> allStations = new ArrayList<>();
     private List<Station> visibleStations = new ArrayList<>();
 
-    private AllStationsViewModel viewModel;
-
     public AllStationsListFragment() {
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(AllStationsViewModel.class);
+        AllStationsViewModel viewModel =
+                ViewModelProviders.of(this).get(AllStationsViewModel.class);
         viewModel.getAllStations().observe(this, new Observer<List<Station>>() {
             @Override
             public void onChanged(@Nullable List<Station> stations) {

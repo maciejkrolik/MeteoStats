@@ -1,5 +1,9 @@
 package com.maciejkrolik.meteostats.util;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 public class SharedPreferenceUtils {
 
     public static String getPreferenceKey(int i) {
@@ -22,5 +26,17 @@ public class SharedPreferenceUtils {
                 break;
         }
         return preferenceKey;
+    }
+
+    public static boolean[] getCheckedItemsInfo(Context context) {
+        final SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
+
+        return new boolean[]{
+                sharedPreferences.getBoolean("show_rain", true),
+                sharedPreferences.getBoolean("show_water", true),
+                sharedPreferences.getBoolean("show_winddir", true),
+                sharedPreferences.getBoolean("show_windlevel", true)
+        };
     }
 }

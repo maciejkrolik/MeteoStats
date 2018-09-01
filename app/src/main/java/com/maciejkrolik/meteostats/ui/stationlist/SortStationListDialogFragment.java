@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
 import com.maciejkrolik.meteostats.R;
@@ -16,17 +17,19 @@ public class SortStationListDialogFragment extends DialogFragment {
 
     private SharedPreferences.Editor editor;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
 
+//        boolean[] checkedItems = SharedPreferenceUtils.getCheckedItemsInfo(getContext());
         boolean[] checkedItems = {
-                sharedPreferences.getBoolean("show_rain", true),
-                sharedPreferences.getBoolean("show_water", true),
-                sharedPreferences.getBoolean("show_winddir", true),
-                sharedPreferences.getBoolean("show_windlevel", true)
+                true,
+                false,
+                true,
+                false
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

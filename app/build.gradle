@@ -26,6 +26,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     // MPAndroidChart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    // LiveData + ViewModel
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    // Dagger 2
+    implementation 'com.google.dagger:dagger:2.16'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'

@@ -18,8 +18,10 @@ import android.view.ViewGroup;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.model.Station;
 import com.maciejkrolik.meteostats.ui.stationdetail.StationDetailsActivity;
+import com.maciejkrolik.meteostats.util.SharedPreferenceUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AllStationsListFragment extends Fragment
@@ -78,41 +80,21 @@ public class AllStationsListFragment extends Fragment
     private List<Station> getChosenStations(List<Station> allStations) {
         List<Station> chosenStations = new ArrayList<>();
 
-        SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean[] checkedItems = SharedPreferenceUtils.getCheckedItemsInfo(getContext());
 
-        if (sharedPreferences.getBoolean("show_rain", true)) {
-            for (Station station : allStations) {
-                if (station.isRain()) {
-                    if (!chosenStations.contains(station))
-                        chosenStations.add(station);
-                }
+        for (Station station : allStations) {
+            boolean[] stationData = {
+                    station.isRain(),
+                    station.isWater(),
+                    station.isWinddir(),
+                    station.isWindlevel()
+            };
+
+            if (Arrays.equals(checkedItems, stationData)) {
+                chosenStations.add(station);
             }
         }
-        if (sharedPreferences.getBoolean("show_water", true)) {
-            for (Station station : allStations) {
-                if (station.isWater()) {
-                    if (!chosenStations.contains(station))
-                        chosenStations.add(station);
-                }
-            }
-        }
-        if (sharedPreferences.getBoolean("show_winddir", true)) {
-            for (Station station : allStations) {
-                if (station.isWinddir()) {
-                    if (!chosenStations.contains(station))
-                        chosenStations.add(station);
-                }
-            }
-        }
-        if (sharedPreferences.getBoolean("show_windlevel", true)) {
-            for (Station station : allStations) {
-                if (station.isWindlevel()) {
-                    if (!chosenStations.contains(station))
-                        chosenStations.add(station);
-                }
-            }
-        }
+
         return chosenStations;
     }
 

@@ -24,13 +24,7 @@ public class SortStationListDialogFragment extends DialogFragment {
                 PreferenceManager.getDefaultSharedPreferences(getContext());
         editor = sharedPreferences.edit();
 
-//        boolean[] checkedItems = SharedPreferenceUtils.getCheckedItemsInfo(getContext());
-        boolean[] checkedItems = {
-                true,
-                false,
-                true,
-                false
-        };
+        boolean[] checkedItems = SharedPreferenceUtils.getCheckedItemsInfo(getContext());
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.dialog_sort_title)

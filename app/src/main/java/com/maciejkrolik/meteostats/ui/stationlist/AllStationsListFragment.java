@@ -14,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.model.Station;
@@ -34,12 +36,32 @@ public class AllStationsListFragment extends Fragment
     public static final String STATION_DATA_MESSAGE =
             "com.maciejkrolik.meteostats.ui.stationlist.STATION_DATA_MESSAGE";
 
+    private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
+    private TextView infoTextView;
+    private ProgressBar progressBar;
 
     private List<Station> allStations = new ArrayList<>();
     private List<Station> visibleStations = new ArrayList<>();
 
     public AllStationsListFragment() {
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_all_stations_list, container, false);
+
+        progressBar = rootView.findViewById(R.id.allStationsProgressBar);
+        infoTextView = rootView.findViewById(R.id.info_text_view);
+        recyclerView = rootView.findViewById(R.id.stations_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new StationListAdapter(visibleStations, this);
+        recyclerView.setAdapter(adapter);
+
+        return rootView;
     }
 
     @Override
@@ -51,30 +73,20 @@ public class AllStationsListFragment extends Fragment
             @Override
             public void onChanged(@Nullable List<Station> stations) {
                 allStations = stations;
+                progressBar.setVisibility(View.GONE);
                 setChosenStations();
             }
         });
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_all_stations_list, container, false);
-
-        RecyclerView recyclerView = rootView.findViewById(R.id.stations_recycler_view);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new StationListAdapter(visibleStations, this);
-        recyclerView.setAdapter(adapter);
-
-        return rootView;
-    }
-
     void setChosenStations() {
         visibleStations.clear();
         visibleStations.addAll(getChosenStations(allStations));
-        adapter.notifyDataSetChanged();
+        if (visibleStations.isEmpty()) hideList();
+        else {
+            showList();
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private List<Station> getChosenStations(List<Station> allStations) {
@@ -115,5 +127,15 @@ public class AllStationsListFragment extends Fragment
         intent.putExtra(STATION_NUMBER_MESSAGE, stationNumber);
         intent.putExtra(STATION_DATA_MESSAGE, availableStationData);
         startActivity(intent);
+    }
+
+    private void showList() {
+        infoTextView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideList() {
+        recyclerView.setVisibility(View.GONE);
+        infoTextView.setVisibility(View.VISIBLE);
     }
 }

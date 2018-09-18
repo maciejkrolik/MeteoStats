@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +32,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RainFragment extends Fragment {
 
+    private LinearLayout weatherDataLayout;
     private TextView rainDataTextView;
+    private ProgressBar progressBar;
     private BarChart barChart;
 
     public RainFragment() {
@@ -40,7 +44,9 @@ public class RainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_rain_weather_data, container, false);
+        weatherDataLayout = rootView.findViewById(R.id.weather_data_layout);
         rainDataTextView = rootView.findViewById(R.id.data_text_view);
+        progressBar = rootView.findViewById(R.id.rainFragmentProgressBar);
         barChart = rootView.findViewById(R.id.barChart);
         barChart.setNoDataText("Loading chart...");
         int stationNumber = getArguments().getInt(AllStationsListFragment.STATION_NUMBER_MESSAGE);
@@ -93,6 +99,9 @@ public class RainFragment extends Fragment {
                             R.string.retrofit_data_error_message,
                             Toast.LENGTH_SHORT).show();
                 }
+
+                progressBar.setVisibility(View.GONE);
+                weatherDataLayout.setVisibility(View.VISIBLE);
 
                 Log.d("TEST", "Downloaded data from the internet - DETAILS");
             }

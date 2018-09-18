@@ -39,7 +39,7 @@ public class RainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_weather_data, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_rain_weather_data, container, false);
         rainDataTextView = rootView.findViewById(R.id.data_text_view);
         barChart = rootView.findViewById(R.id.barChart);
         barChart.setNoDataText("Loading chart...");

@@ -17,7 +17,7 @@ public class WaterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_weather_data, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_rain_weather_data, container, false);
         TextView textView = rootView.findViewById(R.id.data_text_view);
         textView.setText("WaterFragment");
         return rootView;

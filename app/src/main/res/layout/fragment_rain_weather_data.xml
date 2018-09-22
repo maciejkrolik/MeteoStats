@@ -12,7 +12,7 @@
     tools:context=".ui.stationdetail.RainFragment">
 
     <ProgressBar
-        android:id="@+id/rainFragmentProgressBar"
+        android:id="@+id/rain_fragment_progress_bar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -25,10 +25,36 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barChart"
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="150dp">
+
+            <com.db.chart.view.BarChartView
+                android:id="@+id/rain_bar_chart"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </HorizontalScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <TableLayout
+                android:id="@+id/rain_table_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:shrinkColumns="0"
+                android:stretchColumns="*">
+
+                <TableRow android:id="@+id/rain_table_value_row" />
+
+                <TableRow android:id="@+id/rain_table_time_row" />
+
+            </TableLayout>
+
+        </HorizontalScrollView>
 
         <TextView
             android:id="@+id/data_text_view"

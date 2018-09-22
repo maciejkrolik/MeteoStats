@@ -1,5 +1,6 @@
 package com.maciejkrolik.meteostats.ui.stationdetail;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,20 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
+import com.db.chart.model.BarSet;
+import com.db.chart.view.BarChartView;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementList;
 import com.maciejkrolik.meteostats.data.service.GdanskWatersClient;
 import com.maciejkrolik.meteostats.ui.stationlist.AllStationsListFragment;
 import com.maciejkrolik.meteostats.util.DateUtils;
 
-import java.util.ArrayList;
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,10 +34,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RainFragment extends Fragment {
 
-    private LinearLayout weatherDataLayout;
-    private TextView rainDataTextView;
     private ProgressBar progressBar;
-    private BarChart barChart;
+    private LinearLayout weatherDataLayout;
+    private BarChartView barChart;
+    private TextView textView;
+    private TableRow tableValueRow;
+    private TableRow tableTimeRow;
 
     public RainFragment() {
     }
@@ -44,11 +48,14 @@ public class RainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_rain_weather_data, container, false);
+
         weatherDataLayout = rootView.findViewById(R.id.weather_data_layout);
-        rainDataTextView = rootView.findViewById(R.id.data_text_view);
-        progressBar = rootView.findViewById(R.id.rainFragmentProgressBar);
-        barChart = rootView.findViewById(R.id.barChart);
-        barChart.setNoDataText("Loading chart...");
+        textView = rootView.findViewById(R.id.data_text_view);
+        progressBar = rootView.findViewById(R.id.rain_fragment_progress_bar);
+        barChart = rootView.findViewById(R.id.rain_bar_chart);
+        tableValueRow = rootView.findViewById(R.id.rain_table_value_row);
+        tableTimeRow = rootView.findViewById(R.id.rain_table_time_row);
+
         int stationNumber = getArguments().getInt(AllStationsListFragment.STATION_NUMBER_MESSAGE);
 
         Retrofit.Builder builder = new Retrofit.Builder()
@@ -69,30 +76,35 @@ public class RainFragment extends Fragment {
 
                     StringBuilder stringBuilder = new StringBuilder();
                     for (List<String> measurement : stationMeasurementList.getData()) {
-                        stringBuilder.append(measurement.get(0));
+                        stringBuilder.append(measurement.get(0).substring(10, 13));
                         stringBuilder.append(" - ");
-                        stringBuilder.append(measurement.get(1));
+                        String value = measurement.get(1) == null ? "-" : measurement.get(1);
+                        stringBuilder.append(value);
                         stringBuilder.append("\n");
                     }
-                    rainDataTextView.setText(stringBuilder.toString());
+                    textView.setText(stringBuilder.toString());
 
-                    List<BarEntry> entries = new ArrayList<>();
-                    int counter = 0;
+                    BarSet barSet = new BarSet();
+                    Context context = getContext();
+
                     for (List<String> measurement : stationMeasurementList.getData()) {
-                        float value;
                         if (measurement.get(1) != null) {
-                            value = Float.parseFloat(measurement.get(1));
-                        } else {
-                            value = 0;
-                        }
-                        entries.add(new BarEntry(counter, value));
-                        counter++;
-                    }
-                    BarDataSet dataSet = new BarDataSet(entries, "Rain");
+                            float value = Float.parseFloat(measurement.get(1));
+                            String time = measurement.get(0).substring(10, 13);
+                            barSet.addBar(time, value);
 
-                    BarData barData = new BarData(dataSet);
-                    barChart.setData(barData);
-                    barChart.invalidate();
+                            TextView valueTextView = new TextView(context);
+                            valueTextView.setText(String.valueOf(value));
+                            TextView timeTextView = new TextView(context);
+                            timeTextView.setText(time);
+
+                            tableValueRow.addView(valueTextView);
+                            tableTimeRow.addView(timeTextView);
+                        }
+                    }
+
+                    barChart.addData(barSet);
+                    barChart.show();
 
                 } else {
                     Toast.makeText(getActivity(),

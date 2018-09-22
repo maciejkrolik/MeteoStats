@@ -34,9 +34,9 @@ public class SharedPreferenceUtils {
 
         return new boolean[]{
                 sharedPreferences.getBoolean("show_rain", true),
-                sharedPreferences.getBoolean("show_water", true),
-                sharedPreferences.getBoolean("show_winddir", true),
-                sharedPreferences.getBoolean("show_windlevel", true)
+                sharedPreferences.getBoolean("show_water", false),
+                sharedPreferences.getBoolean("show_winddir", false),
+                sharedPreferences.getBoolean("show_windlevel", false)
         };
     }
 }

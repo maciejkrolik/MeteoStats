@@ -2,8 +2,11 @@ package com.maciejkrolik.meteostats.ui.stationdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.ui.stationlist.AllStationsListFragment;
@@ -51,5 +54,23 @@ public class StationDetailsActivity extends AppCompatActivity {
             fragmentTransaction.add(R.id.windlevel_frame_layout, windlevelFragment);
         }
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.station_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_choose_date) {
+            DialogFragment fragment = new DatePickerDialogFragment();
+            fragment.show(getSupportFragmentManager(), "datePicker");
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

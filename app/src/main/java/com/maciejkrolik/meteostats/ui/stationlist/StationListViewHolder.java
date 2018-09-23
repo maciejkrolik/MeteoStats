@@ -8,7 +8,7 @@ import com.maciejkrolik.meteostats.R;
 
 public class StationListViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView stationTextView;
+    TextView stationTextView;
 
     StationListViewHolder(final View itemView, final OnStationClickListener listener) {
         super(itemView);

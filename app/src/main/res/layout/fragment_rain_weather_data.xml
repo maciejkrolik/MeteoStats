@@ -36,47 +36,11 @@
 
         </HorizontalScrollView>
 
-        <HorizontalScrollView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rain_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#bcbcbc"
-            android:layout_marginTop="15dp">
-
-            <!--<android.support.constraint.ConstraintLayout-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content">-->
-
-                <!--<TextView-->
-                    <!--android:text="test"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content" />-->
-
-                <!--<TextView-->
-                    <!--android:text="test2"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content" />-->
-
-            <!--</android.support.constraint.ConstraintLayout>-->
-
-            <TableLayout
-                android:id="@+id/rain_table_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:stretchColumns="*">
-
-                <TableRow android:id="@+id/rain_table_value_row" />
-
-                <TableRow android:id="@+id/rain_table_time_row" />
-
-            </TableLayout>
-
-        </HorizontalScrollView>
-
-        <TextView
-            android:id="@+id/data_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="Sample data" />
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 

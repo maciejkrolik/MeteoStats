@@ -16,7 +16,7 @@ public class StationListAdapter extends RecyclerView.Adapter<StationListViewHold
     private final List<Station> stations;
     private final OnStationClickListener listener;
 
-    public StationListAdapter(final List<Station> stations, final OnStationClickListener listener) {
+    StationListAdapter(final List<Station> stations, final OnStationClickListener listener) {
         this.stations = stations;
         this.listener = listener;
     }

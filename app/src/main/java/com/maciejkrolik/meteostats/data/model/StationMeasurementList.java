@@ -1,12 +1,12 @@
 package com.maciejkrolik.meteostats.data.model;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 
 public class StationMeasurementList {
 
     private String status;
     private String message;
-    private List<List<String>> data;
+    private LinkedHashMap<String, Float> data;
 
     public String getStatus() {
         return status;
@@ -16,7 +16,7 @@ public class StationMeasurementList {
         return message;
     }
 
-    public List<List<String>> getData() {
+    public LinkedHashMap<String, Float> getData() {
         return data;
     }
 }

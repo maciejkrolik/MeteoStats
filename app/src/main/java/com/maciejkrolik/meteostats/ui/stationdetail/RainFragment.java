@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.db.chart.model.BarSet;
@@ -23,6 +22,7 @@ import com.maciejkrolik.meteostats.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,10 +82,10 @@ public class RainFragment extends Fragment {
                     measurementValues.add("[mm]");
                     measurementTimes.add("[h]");
 
-                    for (List<String> measurement : stationMeasurementList.getData()) {
-                        String time = measurement.get(0).substring(10, 13);
-                        if (measurement.get(1) != null) {
-                            float value = Float.parseFloat(measurement.get(1));
+                    for (Map.Entry<String, Float> measurement : stationMeasurementList.getData().entrySet()) {
+                        String time = measurement.getKey().substring(10, 13);
+                        if (measurement.getValue() != null) {
+                            float value = measurement.getValue();
                             barSet.addBar(time, value);
 
                             measurementValues.add(String.valueOf(value));

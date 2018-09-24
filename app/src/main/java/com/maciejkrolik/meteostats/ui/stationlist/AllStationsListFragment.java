@@ -127,6 +127,9 @@ public class AllStationsListFragment extends Fragment
         startActivity(intent);
     }
 
+    void filterStationsList(String newText) {
+    }
+
     private void showList() {
         infoTextView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);

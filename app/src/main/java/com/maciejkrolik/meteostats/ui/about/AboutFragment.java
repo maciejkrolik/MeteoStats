@@ -32,7 +32,9 @@ public class AboutFragment extends Fragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        MenuItem item = menu.findItem(R.id.action_sort_dialog);
-        item.setVisible(false);
+        MenuItem actionSort = menu.findItem(R.id.action_sort_dialog);
+        actionSort.setVisible(false);
+        MenuItem actionSearch = menu.findItem(R.id.action_search_list);
+        actionSearch.setVisible(false);
     }
 }

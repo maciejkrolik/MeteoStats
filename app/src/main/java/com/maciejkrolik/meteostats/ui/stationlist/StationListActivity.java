@@ -9,9 +9,11 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.ui.about.AboutFragment;
@@ -19,7 +21,7 @@ import com.maciejkrolik.meteostats.ui.about.AboutFragment;
 public class StationListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DialogInterface.OnDismissListener {
 
-    FragmentManager fragmentManager;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,21 @@ public class StationListActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.station_list, menu);
+        MenuItem item = menu.findItem(R.id.action_search_list);
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         return true;
     }
 

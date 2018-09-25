@@ -10,27 +10,27 @@ import com.maciejkrolik.meteostats.R;
 
 import java.util.List;
 
-public class MeasurementListAdapter extends RecyclerView.Adapter<MeasurementListViewHolder> {
+public class MeasurementsListAdapter extends RecyclerView.Adapter<MeasurementsListViewHolder> {
 
     private final List<String> measurementValues;
     private final List<String> measurementTimes;
 
-    MeasurementListAdapter(final List<String> measurementValues, final List<String> measurementTimes) {
+    MeasurementsListAdapter(final List<String> measurementValues, final List<String> measurementTimes) {
         this.measurementValues = measurementValues;
         this.measurementTimes = measurementTimes;
     }
 
     @NonNull
     @Override
-    public MeasurementListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MeasurementsListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.content_station_measurement_row, parent, false);
 
-        return new MeasurementListViewHolder(view);
+        return new MeasurementsListViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MeasurementListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MeasurementsListViewHolder holder, int position) {
         String rowValue = measurementValues.get(position);
         String rowTime = measurementTimes.get(position);
         holder.valueTextView.setText(rowValue);

@@ -13,7 +13,7 @@ import android.support.v4.app.DialogFragment;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.util.SharedPreferenceUtils;
 
-public class SortStationListDialogFragment extends DialogFragment {
+public class FilterStationsDialogFragment extends DialogFragment {
 
     private SharedPreferences.Editor editor;
 
@@ -28,7 +28,7 @@ public class SortStationListDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.dialog_sort_title)
-                .setMultiChoiceItems(R.array.dialog_sort_options, checkedItems,
+                .setMultiChoiceItems(R.array.dialog_filter_options, checkedItems,
                         new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which, boolean isChecked) {

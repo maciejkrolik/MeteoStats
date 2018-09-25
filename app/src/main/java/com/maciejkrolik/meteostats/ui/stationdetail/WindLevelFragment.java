@@ -9,17 +9,17 @@ import android.widget.TextView;
 
 import com.maciejkrolik.meteostats.R;
 
-public class WaterFragment extends Fragment {
+public class WindLevelFragment extends Fragment {
 
-    public WaterFragment() {
+    public WindLevelFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_water_data, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_wind_level_data, container, false);
         TextView textView = rootView.findViewById(R.id.data_text_view);
-        textView.setText("WaterFragment");
+        textView.setText("WindLevelFragment");
         return rootView;
     }
 }

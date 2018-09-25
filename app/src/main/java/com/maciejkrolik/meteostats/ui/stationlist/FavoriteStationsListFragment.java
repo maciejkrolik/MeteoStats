@@ -10,7 +10,7 @@ import com.maciejkrolik.meteostats.data.model.Station;
 
 import java.util.List;
 
-public class AllStationsListFragment extends StationListBaseFragment {
+public class FavoriteStationsListFragment extends StationListBaseFragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

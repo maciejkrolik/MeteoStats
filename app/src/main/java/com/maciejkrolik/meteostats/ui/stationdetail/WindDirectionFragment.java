@@ -9,17 +9,17 @@ import android.widget.TextView;
 
 import com.maciejkrolik.meteostats.R;
 
-public class WinddirFragment extends Fragment {
+public class WindDirectionFragment extends Fragment {
 
-    public WinddirFragment() {
+    public WindDirectionFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_winddir_weather_data, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_wind_direction_data, container, false);
         TextView textView = rootView.findViewById(R.id.data_text_view);
-        textView.setText("WinddirFragment");
+        textView.setText("WindDirectionFragment");
         return rootView;
     }
 }

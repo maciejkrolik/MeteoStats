@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.maciejkrolik.meteostats.R;
 
-public class StationListViewHolder extends RecyclerView.ViewHolder {
+class StationListViewHolder extends RecyclerView.ViewHolder {
 
     TextView stationTextView;
 

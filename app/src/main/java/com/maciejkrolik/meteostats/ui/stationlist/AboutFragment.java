@@ -1,4 +1,4 @@
-package com.maciejkrolik.meteostats.ui.about;
+package com.maciejkrolik.meteostats.ui.stationlist;
 
 
 import android.os.Bundle;

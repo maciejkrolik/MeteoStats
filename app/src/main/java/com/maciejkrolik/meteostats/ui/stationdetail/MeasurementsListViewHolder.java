@@ -6,12 +6,12 @@ import android.widget.TextView;
 
 import com.maciejkrolik.meteostats.R;
 
-public class MeasurementListViewHolder extends RecyclerView.ViewHolder {
+class MeasurementsListViewHolder extends RecyclerView.ViewHolder {
 
     TextView valueTextView;
     TextView timeTextView;
 
-    public MeasurementListViewHolder(View itemView) {
+    MeasurementsListViewHolder(View itemView) {
         super(itemView);
         valueTextView = itemView.findViewById(R.id.rain_value_text_view);
         timeTextView = itemView.findViewById(R.id.rain_time_text_view);

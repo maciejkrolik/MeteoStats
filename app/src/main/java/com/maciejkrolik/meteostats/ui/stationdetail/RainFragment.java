@@ -15,9 +15,9 @@ import android.widget.Toast;
 import com.db.chart.model.BarSet;
 import com.db.chart.view.BarChartView;
 import com.maciejkrolik.meteostats.R;
-import com.maciejkrolik.meteostats.data.model.StationMeasurementList;
+import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
 import com.maciejkrolik.meteostats.data.service.GdanskWatersClient;
-import com.maciejkrolik.meteostats.ui.stationlist.AllStationsListFragment;
+import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
 import com.maciejkrolik.meteostats.util.DateUtils;
 
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ public class RainFragment extends Fragment {
     private LinearLayout weatherDataLayout;
     private BarChartView barChart;
 
-    private List<String> measurementValues = new ArrayList<>();
-    private List<String> measurementTimes = new ArrayList<>();
+    private final List<String> measurementValues = new ArrayList<>();
+    private final List<String> measurementTimes = new ArrayList<>();
 
     public RainFragment() {
     }
@@ -45,7 +45,7 @@ public class RainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_rain_weather_data, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_rain_data, container, false);
 
         RecyclerView recyclerView = rootView.findViewById(R.id.rain_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -53,14 +53,14 @@ public class RainFragment extends Fragment {
                 LinearLayoutManager.HORIZONTAL,
                 false);
         recyclerView.setLayoutManager(layoutManager);
-        final RecyclerView.Adapter adapter = new MeasurementListAdapter(measurementValues, measurementTimes);
+        final RecyclerView.Adapter adapter = new MeasurementsListAdapter(measurementValues, measurementTimes);
         recyclerView.setAdapter(adapter);
 
         weatherDataLayout = rootView.findViewById(R.id.weather_data_layout);
         progressBar = rootView.findViewById(R.id.rain_fragment_progress_bar);
         barChart = rootView.findViewById(R.id.rain_bar_chart);
 
-        int stationNumber = getArguments().getInt(AllStationsListFragment.STATION_NUMBER_MESSAGE);
+        int stationNumber = getArguments().getInt(StationListBaseFragment.STATION_NUMBER_MESSAGE);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("https://pomiary.gdanskiewody.pl")
@@ -68,21 +68,21 @@ public class RainFragment extends Fragment {
         Retrofit retrofit = builder.build();
 
         GdanskWatersClient client = retrofit.create(GdanskWatersClient.class);
-        Call<StationMeasurementList> call = client.getMeasurement(stationNumber,
+        Call<StationMeasurementsList> call = client.getMeasurements(stationNumber,
                 "rain", DateUtils.getTodayDateAsString());
 
-        call.enqueue(new Callback<StationMeasurementList>() {
+        call.enqueue(new Callback<StationMeasurementsList>() {
             @Override
-            public void onResponse(Call<StationMeasurementList> call, Response<StationMeasurementList> response) {
-                StationMeasurementList stationMeasurementList = response.body();
+            public void onResponse(Call<StationMeasurementsList> call, Response<StationMeasurementsList> response) {
+                StationMeasurementsList stationMeasurementsList = response.body();
 
-                if (stationMeasurementList != null) {
+                if (stationMeasurementsList != null) {
                     BarSet barSet = new BarSet();
 
                     measurementValues.add("[mm]");
                     measurementTimes.add("[h]");
 
-                    for (Map.Entry<String, Float> measurement : stationMeasurementList.getData().entrySet()) {
+                    for (Map.Entry<String, Float> measurement : stationMeasurementsList.getData().entrySet()) {
                         String time = measurement.getKey().substring(10, 13);
                         if (measurement.getValue() != null) {
                             float value = measurement.getValue();
@@ -114,7 +114,7 @@ public class RainFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<StationMeasurementList> call, Throwable t) {
+            public void onFailure(Call<StationMeasurementsList> call, Throwable t) {
                 Toast.makeText(getActivity(),
                         R.string.retrofit_error_message, Toast.LENGTH_SHORT).show();
             }

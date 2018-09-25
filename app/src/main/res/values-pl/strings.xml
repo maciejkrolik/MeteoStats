@@ -9,7 +9,7 @@
     <string name="retrofit_error_message">Coś poszło nie tak!</string>
     <string name="retrofit_data_error_message">Błąd pobranych danych!</string>
     <string name="dialog_sort_title">Wybierz dane</string>
-    <string name="action_sorting">Sortuj</string>
+    <string name="action_filter_stations">Filtruj</string>
     <string name="nav_all_stations">Wszystkie stacje</string>
     <string name="nav_favorite_stations">Ulubione</string>
     <string name="nav_about">O aplikacji</string>
@@ -18,4 +18,5 @@
     <string name="info_no_stations">Brak stacji o wybranych parametrach</string>
     <string name="action_date">Wybierz datę</string>
     <string name="action_search">Wyszukaj</string>
+    <string name="hello_blank_fragment">Pusty fragment</string>
 </resources>

@@ -2,7 +2,7 @@ package com.maciejkrolik.meteostats.data.model;
 
 import java.util.LinkedHashMap;
 
-public class StationMeasurementList {
+public class StationMeasurementsList {
 
     private String status;
     private String message;

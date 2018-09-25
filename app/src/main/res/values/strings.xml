@@ -13,7 +13,7 @@
     <string name="retrofit_data_error_message">Error with downloaded data!</string>
     <string name="dialog_confirm" translatable="false">OK</string>
     <string name="dialog_sort_title">Choose data</string>
-    <string name="action_sorting">Sort</string>
+    <string name="action_filter_stations">Filter</string>
     <string name="nav_all_stations">All stations</string>
     <string name="nav_favorite_stations">Favorites</string>
     <string name="nav_about">About</string>

@@ -12,11 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.maciejkrolik.meteostats.R;
-import com.maciejkrolik.meteostats.ui.about.AboutFragment;
 
 public class StationListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DialogInterface.OnDismissListener {
@@ -31,7 +30,7 @@ public class StationListActivity extends AppCompatActivity
         AllStationsListFragment allStationsListFragment = new AllStationsListFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.content_station_list, allStationsListFragment, "allStationsFragment")
+                .add(R.id.content_station_list, allStationsListFragment, "station_list_fragment")
                 .commit();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -84,29 +83,38 @@ public class StationListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_sort_dialog) {
-            showSortingDialog();
+            showFilterDialog();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void showSortingDialog() {
-        DialogFragment fragment = new SortStationListDialogFragment();
-        fragment.show(fragmentManager, "sortingDialogFragment");
+    private void showFilterDialog() {
+        DialogFragment fragment = new FilterStationsDialogFragment();
+        fragment.show(fragmentManager, "sorting_dialog_fragment");
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        StationListBaseFragment fragment = (StationListBaseFragment) fragmentManager
+                .findFragmentByTag("station_list_fragment");
+        fragment.setChosenStations();
+    }
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_favorite_stations) {
-
+            FavoriteStationsListFragment fragment = new FavoriteStationsListFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_station_list, fragment, "station_list_fragment")
+                    .commit();
 
         } else if (id == R.id.nav_all_stations_list) {
             AllStationsListFragment fragment = new AllStationsListFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_station_list, fragment, "allStationsFragment")
+                    .replace(R.id.content_station_list, fragment, "station_list_fragment")
                     .commit();
 
         } else if (id == R.id.nav_about) {
@@ -119,12 +127,5 @@ public class StationListActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialogInterface) {
-        AllStationsListFragment fragment = (AllStationsListFragment) fragmentManager
-                .findFragmentByTag("allStationsFragment");
-        fragment.setChosenStations();
     }
 }

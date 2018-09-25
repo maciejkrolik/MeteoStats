@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <ProgressBar
-        android:id="@+id/allStationsProgressBar"
+        android:id="@+id/stations_progress_bar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"

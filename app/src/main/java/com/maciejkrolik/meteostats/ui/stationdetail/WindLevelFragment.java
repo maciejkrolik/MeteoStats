@@ -19,7 +19,7 @@ public class WindLevelFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_wind_level_data, container, false);
         TextView textView = rootView.findViewById(R.id.data_text_view);
-        textView.setText("WindlevelFragment");
+        textView.setText("WindLevelFragment");
         return rootView;
     }
 }

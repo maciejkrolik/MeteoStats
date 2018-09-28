@@ -10,42 +10,31 @@ import com.maciejkrolik.meteostats.data.service.GdanskWatersClient;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
+@Singleton
 public class StationRepository {
 
-    private GdanskWatersClient client;
-    private static StationRepository stationRepository;
+    private final GdanskWatersClient client;
 
-    private StationRepository() {
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("https://pomiary.gdanskiewody.pl")
-                .addConverterFactory(GsonConverterFactory.create());
-        Retrofit retrofit = builder.build();
-
-        client = retrofit.create(GdanskWatersClient.class);
-    }
-
-    public synchronized static StationRepository getInstance() {
-        //TODO Replace with Dagger 2
-        if (stationRepository == null) {
-            stationRepository = new StationRepository();
-
-        }
-        return stationRepository;
+    @Inject
+    StationRepository(GdanskWatersClient client) {
+        this.client = client;
     }
 
     public LiveData<List<Station>> getAllStations() {
         final MutableLiveData<List<Station>> data = new MutableLiveData<>();
+
         client.listStations().enqueue(new Callback<StationList>() {
+
             @Override
             public void onResponse(Call<StationList> call, Response<StationList> response) {
-                StationList stationList = response.body();
-                data.setValue(stationList.getData());
+                data.setValue(response.body().getData());
 
                 Log.d("TEST", "Downloaded data from the internet");
             }
@@ -54,6 +43,7 @@ public class StationRepository {
             public void onFailure(Call<StationList> call, Throwable t) {
 
             }
+
         });
         return data;
     }

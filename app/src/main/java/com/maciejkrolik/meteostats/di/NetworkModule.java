@@ -1,6 +1,6 @@
 package com.maciejkrolik.meteostats.di;
 
-import com.maciejkrolik.meteostats.data.service.GdanskWatersClient;
+import com.maciejkrolik.meteostats.data.GdanskWatersClient;
 
 import javax.inject.Singleton;
 

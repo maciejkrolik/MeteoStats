@@ -1,6 +1,6 @@
 package com.maciejkrolik.meteostats.di;
 
-import com.maciejkrolik.meteostats.data.repository.StationRepository;
+import com.maciejkrolik.meteostats.data.StationRepository;
 
 import javax.inject.Singleton;
 

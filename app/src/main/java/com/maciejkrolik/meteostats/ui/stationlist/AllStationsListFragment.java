@@ -15,8 +15,11 @@ public class AllStationsListFragment extends StationListBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        AllStationsViewModel viewModel =
-                ViewModelProviders.of(this).get(AllStationsViewModel.class);
+
+        AllStationsViewModel viewModel = ViewModelProviders
+                .of(this)
+                .get(AllStationsViewModel.class);
+
         viewModel.getAllStations().observe(this, new Observer<List<Station>>() {
             @Override
             public void onChanged(@Nullable List<Station> stations) {

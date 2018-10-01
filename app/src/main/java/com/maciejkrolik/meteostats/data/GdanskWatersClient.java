@@ -1,4 +1,4 @@
-package com.maciejkrolik.meteostats.data.service;
+package com.maciejkrolik.meteostats.data;
 
 import com.maciejkrolik.meteostats.data.model.StationList;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;

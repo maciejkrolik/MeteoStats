@@ -12,14 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.db.chart.model.BarSet;
 import com.db.chart.view.BarChartView;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
-import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.RainViewModel;
-import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.StationDetailViewModelFactory;
+import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModel;
+import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModelFactory;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
 import com.maciejkrolik.meteostats.util.DateUtils;
 
@@ -27,27 +28,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class RainFragment extends Fragment {
+public class RainAndWaterFragment extends Fragment {
 
     private ProgressBar progressBar;
     private LinearLayout weatherDataLayout;
     private BarChartView barChart;
 
     private int stationNumber;
+    private String measurementSymbol;
     private RecyclerView.Adapter adapter;
 
     private final List<String> measurementValues = new ArrayList<>();
     private final List<String> measurementTimes = new ArrayList<>();
 
-    public RainFragment() {
+    public RainAndWaterFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_rain_data, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_rain_water_data, container, false);
 
-        RecyclerView recyclerView = rootView.findViewById(R.id.rain_recycler_view);
+        RecyclerView recyclerView = rootView.findViewById(R.id.rain_water_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL,
@@ -57,10 +59,17 @@ public class RainFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         weatherDataLayout = rootView.findViewById(R.id.weather_data_layout);
-        progressBar = rootView.findViewById(R.id.rain_fragment_progress_bar);
-        barChart = rootView.findViewById(R.id.rain_bar_chart);
+        progressBar = rootView.findViewById(R.id.rain_water_fragment_progress_bar);
+        barChart = rootView.findViewById(R.id.rain_water_bar_chart);
+        TextView measurementTitle = rootView.findViewById(R.id.rain_water_measurement_title);
 
         stationNumber = getArguments().getInt(StationListBaseFragment.STATION_NUMBER_MESSAGE);
+        measurementSymbol = getArguments().getString(StationDetailsActivity.MEASUREMENT_SYMBOL);
+
+        if (measurementSymbol.equals("rain"))
+            measurementTitle.setText(R.string.nav_rain);
+        else
+            measurementTitle.setText(R.string.nav_water);
 
         return rootView;
     }
@@ -69,12 +78,12 @@ public class RainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RainViewModel viewModel = ViewModelProviders
-                .of(this, new StationDetailViewModelFactory(
+        WeatherDataViewModel viewModel = ViewModelProviders
+                .of(this, new WeatherDataViewModelFactory(
                         stationNumber,
-                        "rain",
+                        measurementSymbol,
                         DateUtils.getTodayDateAsString()))
-                .get(RainViewModel.class);
+                .get(WeatherDataViewModel.class);
 
         viewModel.getMeasurementsList().observe(this, new Observer<StationMeasurementsList>() {
             @Override

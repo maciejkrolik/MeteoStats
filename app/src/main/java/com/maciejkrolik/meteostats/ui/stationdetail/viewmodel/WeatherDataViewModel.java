@@ -7,13 +7,13 @@ import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
 import com.maciejkrolik.meteostats.di.ApplicationComponent;
 import com.maciejkrolik.meteostats.di.DaggerApplicationComponent;
 
-public class RainViewModel extends ViewModel {
+public class WeatherDataViewModel extends ViewModel {
 
     private final LiveData<StationMeasurementsList> stationMeasurementsList;
 
-    RainViewModel(int stationNumber,
-                  String measurementSymbol,
-                  String date) {
+    WeatherDataViewModel(int stationNumber,
+                         String measurementSymbol,
+                         String date) {
         ApplicationComponent applicationComponent = DaggerApplicationComponent.create();
         stationMeasurementsList = applicationComponent
                 .getStationRepository()

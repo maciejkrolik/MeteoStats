@@ -13,6 +13,9 @@ import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
 
 public class StationDetailsActivity extends AppCompatActivity {
 
+    public static final String MEASUREMENT_SYMBOL =
+            "com.maciejkrolik.meteostats.ui.stationdetail.MEASUREMENT_SYMBOL";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,33 +30,49 @@ public class StationDetailsActivity extends AppCompatActivity {
 
         setTitle(stationName);
 
-        Bundle bundle = new Bundle();
-        bundle.putInt(StationListBaseFragment.STATION_NUMBER_MESSAGE, stationNumber);
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
 
         if (stationData[0]) {
-            RainFragment rainFragment = new RainFragment();
-            rainFragment.setArguments(bundle);
-            fragmentTransaction.add(R.id.rain_frame_layout, rainFragment);
+            RainAndWaterFragment rainAndWaterFragment =
+                    createRainAndWaterFragment(stationNumber, "rain");
+            fragmentTransaction.replace(R.id.rain_frame_layout, rainAndWaterFragment);
+
         }
         if (stationData[1]) {
-            WaterFragment waterFragment = new WaterFragment();
-            waterFragment.setArguments(bundle);
-            fragmentTransaction.add(R.id.water_frame_layout, waterFragment);
+            RainAndWaterFragment rainAndWaterFragment =
+                    createRainAndWaterFragment(stationNumber, "water");
+            fragmentTransaction.replace(R.id.water_frame_layout, rainAndWaterFragment);
+
         }
         if (stationData[2]) {
+            Bundle bundle = createBundle(stationNumber);
             WindDirectionFragment windDirectionFragment = new WindDirectionFragment();
             windDirectionFragment.setArguments(bundle);
-            fragmentTransaction.add(R.id.winddir_frame_layout, windDirectionFragment);
+            fragmentTransaction.replace(R.id.winddir_frame_layout, windDirectionFragment);
+
         }
         if (stationData[3]) {
+            Bundle bundle = createBundle(stationNumber);
             WindLevelFragment windLevelFragment = new WindLevelFragment();
             windLevelFragment.setArguments(bundle);
-            fragmentTransaction.add(R.id.windlevel_frame_layout, windLevelFragment);
+            fragmentTransaction.replace(R.id.windlevel_frame_layout, windLevelFragment);
         }
         fragmentTransaction.commit();
+    }
+
+    private RainAndWaterFragment createRainAndWaterFragment(int stationNumber, String measurementSymbol) {
+        Bundle bundle = createBundle(stationNumber);
+        bundle.putString(MEASUREMENT_SYMBOL, measurementSymbol);
+        RainAndWaterFragment rainAndWaterFragment = new RainAndWaterFragment();
+        rainAndWaterFragment.setArguments(bundle);
+        return rainAndWaterFragment;
+    }
+
+    private Bundle createBundle(int stationNumber) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(StationListBaseFragment.STATION_NUMBER_MESSAGE, stationNumber);
+        return bundle;
     }
 
     @Override

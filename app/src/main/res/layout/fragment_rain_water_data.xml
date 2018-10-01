@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
+    android:layout_marginBottom="10dp"
     card_view:cardElevation="4dp"
     card_view:contentPadding="5dp"
-    tools:context=".ui.stationdetail.RainFragment">
+    tools:context=".ui.stationdetail.RainAndWaterFragment">
 
     <ProgressBar
-        android:id="@+id/rain_fragment_progress_bar"
+        android:id="@+id/rain_water_fragment_progress_bar"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -25,19 +25,26 @@
         android:orientation="vertical"
         android:visibility="gone">
 
+        <TextView
+            android:id="@+id/rain_water_measurement_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            tools:text="Measurement" />
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="150dp">
 
             <com.db.chart.view.BarChartView
-                android:id="@+id/rain_bar_chart"
+                android:id="@+id/rain_water_bar_chart"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
         </HorizontalScrollView>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rain_recycler_view"
+            android:id="@+id/rain_water_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" />

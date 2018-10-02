@@ -72,7 +72,7 @@ public abstract class StationListBaseFragment extends Fragment
     }
 
     private List<Station> getChosenStations(List<Station> allStations) {
-        List<Station> chosenStations = new ArrayList<>();
+        Set<Station> chosenStations = new HashSet<>();
 
         boolean[] checkedItems = SharedPreferenceUtils.getCheckedItemsInfo(getContext());
 
@@ -86,13 +86,12 @@ public abstract class StationListBaseFragment extends Fragment
 
             for (int i = 0; i < checkedItems.length; i++) {
                 if (checkedItems[i] && stationData[i]) {
-                    if (!chosenStations.contains(station))
-                        chosenStations.add(station);
+                    chosenStations.add(station);
                 }
             }
         }
 
-        return chosenStations;
+        return new ArrayList<>(chosenStations);
     }
 
     @Override

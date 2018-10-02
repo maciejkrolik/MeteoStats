@@ -49,14 +49,14 @@ public class StationDetailsActivity extends AppCompatActivity {
             Bundle bundle = createBundle(stationNumber);
             WindDirectionFragment windDirectionFragment = new WindDirectionFragment();
             windDirectionFragment.setArguments(bundle);
-            fragmentTransaction.replace(R.id.winddir_frame_layout, windDirectionFragment);
+            fragmentTransaction.replace(R.id.wind_direction_frame_layout, windDirectionFragment);
 
         }
         if (stationData[3]) {
             Bundle bundle = createBundle(stationNumber);
             WindLevelFragment windLevelFragment = new WindLevelFragment();
             windLevelFragment.setArguments(bundle);
-            fragmentTransaction.replace(R.id.windlevel_frame_layout, windLevelFragment);
+            fragmentTransaction.replace(R.id.wind_level_frame_layout, windLevelFragment);
         }
         fragmentTransaction.commit();
     }

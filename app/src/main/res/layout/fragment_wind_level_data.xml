@@ -4,23 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
+    android:layout_marginBottom="10dp"
     card_view:cardElevation="4dp"
     card_view:contentPadding="5dp"
     tools:context=".ui.stationdetail.WindLevelFragment">
 
+    <ProgressBar
+        android:id="@+id/wind_level_fragment_progress_bar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:padding="10dp" />
+
     <LinearLayout
+        android:id="@+id/weather_data_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
-            android:id="@+id/data_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:text="@string/nav_windlevel"
+            tools:text="Measurement" />
+
+        <com.db.chart.view.LineChartView
+            android:id="@+id/wind_level_line_chart"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/wind_level_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Sample data" />
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 

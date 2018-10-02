@@ -18,12 +18,13 @@ import android.widget.Toast;
 import com.db.chart.animation.Animation;
 import com.db.chart.model.BarSet;
 import com.db.chart.view.BarChartView;
+import com.db.chart.view.HorizontalBarChartView;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModel;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModelFactory;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
-import com.maciejkrolik.meteostats.util.DateUtils;
+import com.maciejkrolik.meteostats.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class RainAndWaterFragment extends Fragment {
                 .of(this, new WeatherDataViewModelFactory(
                         stationNumber,
                         measurementSymbol,
-                        DateUtils.getTodayDateAsString()))
+                        StringUtils.getTodayDateAsString()))
                 .get(WeatherDataViewModel.class);
 
         viewModel.getMeasurementsList().observe(this, new Observer<StationMeasurementsList>() {

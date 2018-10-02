@@ -9,16 +9,16 @@ import com.maciejkrolik.meteostats.di.DaggerApplicationComponent;
 
 import java.util.List;
 
-class AllStationsViewModel extends ViewModel {
+public class AllStationsViewModel extends ViewModel {
 
     private final LiveData<List<Station>> allStations;
 
-    AllStationsViewModel() {
+    public AllStationsViewModel() {
         ApplicationComponent applicationComponent = DaggerApplicationComponent.create();
         allStations = applicationComponent.getStationRepository().getAllStations();
     }
 
-    LiveData<List<Station>> getAllStations() {
+    public LiveData<List<Station>> getAllStations() {
         return allStations;
     }
 }

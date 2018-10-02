@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.db.chart.animation.Animation;
 import com.db.chart.model.BarSet;
 import com.db.chart.view.BarChartView;
 import com.maciejkrolik.meteostats.R;
@@ -110,8 +111,10 @@ public class RainAndWaterFragment extends Fragment {
 
                     adapter.notifyDataSetChanged();
 
+                    Animation animation = new Animation();
+
                     barChart.addData(barSet);
-                    barChart.show();
+                    barChart.show(animation);
 
                 } else {
                     Toast.makeText(getActivity(),

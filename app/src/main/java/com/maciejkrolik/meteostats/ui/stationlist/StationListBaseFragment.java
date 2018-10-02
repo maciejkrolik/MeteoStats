@@ -19,7 +19,9 @@ import com.maciejkrolik.meteostats.util.SharedPreferenceUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public abstract class StationListBaseFragment extends Fragment
         implements OnStationClickListener {
@@ -82,8 +84,11 @@ public abstract class StationListBaseFragment extends Fragment
                     station.isWindlevel()
             };
 
-            if (Arrays.equals(checkedItems, stationData)) {
-                chosenStations.add(station);
+            for (int i = 0; i < checkedItems.length; i++) {
+                if (checkedItems[i] && stationData[i]) {
+                    if (!chosenStations.contains(station))
+                        chosenStations.add(station);
+                }
             }
         }
 

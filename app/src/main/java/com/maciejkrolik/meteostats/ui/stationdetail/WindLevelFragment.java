@@ -8,26 +8,21 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.db.chart.animation.Animation;
-import com.db.chart.model.BarSet;
 import com.db.chart.model.LineSet;
-import com.db.chart.view.BarChartView;
 import com.db.chart.view.LineChartView;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModel;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModelFactory;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
-import com.maciejkrolik.meteostats.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +35,7 @@ public class WindLevelFragment extends Fragment {
     private LineChartView lineChart;
 
     private int stationNumber;
+    private String date;
     private RecyclerView.Adapter adapter;
 
     private final List<String> measurementValues = new ArrayList<>();
@@ -67,6 +63,7 @@ public class WindLevelFragment extends Fragment {
         lineChart = rootView.findViewById(R.id.wind_level_line_chart);
 
         stationNumber = getArguments().getInt(StationListBaseFragment.STATION_NUMBER_MESSAGE);
+        date = getArguments().getString(StationDetailsActivity.DATE);
 
         return rootView;
     }
@@ -79,7 +76,7 @@ public class WindLevelFragment extends Fragment {
                 .of(this, new WeatherDataViewModelFactory(
                         stationNumber,
                         "windlevel",
-                        StringUtils.getTodayDateAsString()))
+                        date))
                 .get(WeatherDataViewModel.class);
 
         viewModel.getMeasurementsList().observe(this, new Observer<StationMeasurementsList>() {

@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.maciejkrolik.meteostats.R;
@@ -21,6 +20,7 @@ public class StationListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DialogInterface.OnDismissListener {
 
     private FragmentManager fragmentManager;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,8 @@ public class StationListActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (!searchView.isIconified()) {
+            searchView.setIconified(true);
         } else {
             super.onBackPressed();
         }
@@ -61,16 +63,22 @@ public class StationListActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.station_list, menu);
         MenuItem item = menu.findItem(R.id.action_search_list);
-        SearchView searchView = (SearchView) item.getActionView();
+        searchView = (SearchView) item.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                StationListBaseFragment fragment = (StationListBaseFragment) fragmentManager
+                        .findFragmentByTag("station_list_fragment");
+                fragment.searchStationList(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                StationListBaseFragment fragment = (StationListBaseFragment) fragmentManager
+                        .findFragmentByTag("station_list_fragment");
+                fragment.searchStationList(newText);
                 return false;
             }
         });

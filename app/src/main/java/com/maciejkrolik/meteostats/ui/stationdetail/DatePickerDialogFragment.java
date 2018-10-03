@@ -1,15 +1,14 @@
 package com.maciejkrolik.meteostats.ui.stationdetail;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.app.DatePickerDialog;
 import android.support.v4.app.DialogFragment;
-import android.widget.DatePicker;
 
 import java.util.Calendar;
+import java.util.Date;
 
-public class DatePickerDialogFragment extends DialogFragment
-        implements DatePickerDialog.OnDateSetListener {
+public class DatePickerDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -18,9 +17,9 @@ public class DatePickerDialogFragment extends DialogFragment
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        return new DatePickerDialog(getActivity(), this, year, month, day);
-    }
-
-    public void onDateSet(DatePicker view, int year, int month, int day) {
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(),
+                (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
+        dialog.getDatePicker().setMaxDate(new Date().getTime());
+        return dialog;
     }
 }

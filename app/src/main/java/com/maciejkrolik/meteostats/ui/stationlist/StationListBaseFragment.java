@@ -113,7 +113,27 @@ public abstract class StationListBaseFragment extends Fragment
         startActivity(intent);
     }
 
-    void searchStationList(String newText) {
+    void searchStationList(String text) {
+        visibleStations.clear();
+
+        List<Station> filteredStations = new ArrayList<>(getChosenStations(allStations));
+
+        if (text.isEmpty()) {
+            visibleStations.addAll(filteredStations);
+        } else {
+            text = text.toLowerCase();
+            for (Station station : filteredStations) {
+                if (station.getName().toLowerCase().contains(text)) {
+                    visibleStations.add(station);
+                }
+            }
+        }
+
+        if (visibleStations.isEmpty()) hideList();
+        else {
+            showList();
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void showList() {

@@ -31,6 +31,7 @@ public class WindDirectionFragment extends Fragment {
     private LinearLayout weatherDataLayout;
 
     private int stationNumber;
+    private String date;
     private RecyclerView.Adapter adapter;
 
     private final List<String> measurementValues = new ArrayList<>();
@@ -57,6 +58,7 @@ public class WindDirectionFragment extends Fragment {
         progressBar = rootView.findViewById(R.id.wind_direction_progress_bar);
 
         stationNumber = getArguments().getInt(StationListBaseFragment.STATION_NUMBER_MESSAGE);
+        date = getArguments().getString(StationDetailsActivity.DATE);
 
         return rootView;
     }
@@ -69,7 +71,7 @@ public class WindDirectionFragment extends Fragment {
                 .of(this, new WeatherDataViewModelFactory(
                         stationNumber,
                         "winddir",
-                        StringUtils.getTodayDateAsString()))
+                        date))
                 .get(WeatherDataViewModel.class);
 
         viewModel.getMeasurementsList().observe(this, new Observer<StationMeasurementsList>() {

@@ -23,6 +23,7 @@ import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModel;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModelFactory;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
+import com.maciejkrolik.meteostats.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,10 +87,11 @@ public class WindLevelFragment extends Fragment {
                     LineSet lineSet = new LineSet();
 
                     measurementValues.add("[m/s]");
-                    measurementTimes.add("[h]");
+                    measurementTimes.add(getResources().getString(R.string.detail_time));
 
                     for (Map.Entry<String, Float> measurement : measurementsList.getData().entrySet()) {
-                        String time = measurement.getKey().substring(10, 13);
+                        String time = StringUtils.convertUTCToLocalTime(measurement.getKey());
+
                         if (measurement.getValue() != null) {
                             float value = measurement.getValue();
                             lineSet.addPoint(time, value);

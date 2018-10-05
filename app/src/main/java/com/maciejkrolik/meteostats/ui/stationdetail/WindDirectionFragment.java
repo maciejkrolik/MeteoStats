@@ -78,11 +78,12 @@ public class WindDirectionFragment extends Fragment {
             @Override
             public void onChanged(@Nullable StationMeasurementsList measurementsList) {
                 if (measurementsList != null) {
-                    measurementValues.add("Direction");
-                    measurementTimes.add("[h]");
+                    measurementValues.add(getResources().getString(R.string.detail_direction));
+                    measurementTimes.add(getResources().getString(R.string.detail_time));
 
                     for (Map.Entry<String, Float> measurement : measurementsList.getData().entrySet()) {
-                        String time = measurement.getKey().substring(10, 13);
+                        String time = StringUtils.convertUTCToLocalTime(measurement.getKey());
+
                         if (measurement.getValue() != null) {
                             float value = measurement.getValue();
                             measurementValues.add(StringUtils.headingToString(value));

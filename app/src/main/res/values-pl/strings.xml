@@ -19,4 +19,6 @@
     <string name="action_date">Wybierz datę</string>
     <string name="action_search">Wyszukaj</string>
     <string name="hello_blank_fragment">Pusty fragment</string>
+    <string name="detail_time">Godz.</string>
+    <string name="detail_direction">Kierunek</string>
 </resources>

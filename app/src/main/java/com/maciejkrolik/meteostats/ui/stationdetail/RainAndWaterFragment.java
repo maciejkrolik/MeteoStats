@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModel;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModelFactory;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
+import com.maciejkrolik.meteostats.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,10 +96,11 @@ public class RainAndWaterFragment extends Fragment {
                     BarSet barSet = new BarSet();
 
                     measurementValues.add("[mm]");
-                    measurementTimes.add("[h]");
+                    measurementTimes.add(getResources().getString(R.string.detail_time));
 
                     for (Map.Entry<String, Float> measurement : measurementsList.getData().entrySet()) {
-                        String time = measurement.getKey().substring(10, 13);
+                        String time = StringUtils.convertUTCToLocalTime(measurement.getKey());
+
                         if (measurement.getValue() != null) {
                             float value = measurement.getValue();
                             barSet.addBar(time, value);

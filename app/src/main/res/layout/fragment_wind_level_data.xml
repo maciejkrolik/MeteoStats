@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
             android:text="@string/nav_windlevel"
+            android:textStyle="bold"
             tools:text="Measurement" />
 
         <com.db.chart.view.LineChartView

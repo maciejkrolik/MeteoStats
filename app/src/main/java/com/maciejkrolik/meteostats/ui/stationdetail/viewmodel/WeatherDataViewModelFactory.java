@@ -18,6 +18,7 @@ public class WeatherDataViewModelFactory implements ViewModelProvider.Factory {
         this.date = date;
     }
 
+    @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {

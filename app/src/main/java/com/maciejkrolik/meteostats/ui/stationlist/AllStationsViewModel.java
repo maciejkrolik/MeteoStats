@@ -11,14 +11,17 @@ import java.util.List;
 
 public class AllStationsViewModel extends ViewModel {
 
-    private final LiveData<List<Station>> allStations;
-
-    public AllStationsViewModel() {
-        ApplicationComponent applicationComponent = DaggerApplicationComponent.create();
-        allStations = applicationComponent.getStationRepository().getAllStations();
-    }
+    private LiveData<List<Station>> allStations;
 
     public LiveData<List<Station>> getAllStations() {
+        if (allStations == null) {
+            loadAllStations();
+        }
         return allStations;
+    }
+
+    private void loadAllStations() {
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.create();
+        allStations = applicationComponent.getStationRepository().getAllStations();
     }
 }

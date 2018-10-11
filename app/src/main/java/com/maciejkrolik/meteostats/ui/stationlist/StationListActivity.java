@@ -106,7 +106,7 @@ public class StationListActivity extends AppCompatActivity
     public void onDismiss(DialogInterface dialogInterface) {
         StationListBaseFragment fragment = (StationListBaseFragment) fragmentManager
                 .findFragmentByTag("station_list_fragment");
-        fragment.setChosenStations();
+        fragment.setupChosenStations();
     }
 
     @Override

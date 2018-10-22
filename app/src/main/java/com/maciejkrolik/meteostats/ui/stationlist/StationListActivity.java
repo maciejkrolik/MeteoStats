@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,16 +23,21 @@ public class StationListActivity extends AppCompatActivity
     private FragmentManager fragmentManager;
     private SearchView searchView;
 
+    private static final String stationListTag = "station_list_fragment";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_list);
 
-        AllStationsListFragment allStationsListFragment = new AllStationsListFragment();
         fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_station_list, allStationsListFragment, "station_list_fragment")
-                .commit();
+        Fragment fragment = fragmentManager.findFragmentByTag(stationListTag);
+        if (fragment == null) {
+            AllStationsListFragment allStationsListFragment = new AllStationsListFragment();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_station_list, allStationsListFragment, stationListTag)
+                    .commit();
+        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,7 +75,7 @@ public class StationListActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String query) {
                 StationListBaseFragment fragment = (StationListBaseFragment) fragmentManager
-                        .findFragmentByTag("station_list_fragment");
+                        .findFragmentByTag(stationListTag);
                 fragment.searchStationList(query);
                 return false;
             }
@@ -77,7 +83,7 @@ public class StationListActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextChange(String newText) {
                 StationListBaseFragment fragment = (StationListBaseFragment) fragmentManager
-                        .findFragmentByTag("station_list_fragment");
+                        .findFragmentByTag(stationListTag);
                 fragment.searchStationList(newText);
                 return false;
             }
@@ -105,7 +111,7 @@ public class StationListActivity extends AppCompatActivity
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
         StationListBaseFragment fragment = (StationListBaseFragment) fragmentManager
-                .findFragmentByTag("station_list_fragment");
+                .findFragmentByTag(stationListTag);
         fragment.setupChosenStations();
     }
 
@@ -116,13 +122,13 @@ public class StationListActivity extends AppCompatActivity
         if (id == R.id.nav_favorite_stations) {
             FavoriteStationsListFragment fragment = new FavoriteStationsListFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_station_list, fragment, "station_list_fragment")
+                    .replace(R.id.content_station_list, fragment, stationListTag)
                     .commit();
 
         } else if (id == R.id.nav_all_stations_list) {
             AllStationsListFragment fragment = new AllStationsListFragment();
             fragmentManager.beginTransaction()
-                    .replace(R.id.content_station_list, fragment, "station_list_fragment")
+                    .replace(R.id.content_station_list, fragment, stationListTag)
                     .commit();
 
         } else if (id == R.id.nav_about) {

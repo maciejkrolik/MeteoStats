@@ -13,10 +13,9 @@
 
     <ProgressBar
         android:id="@+id/wind_level_fragment_progress_bar"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:padding="10dp" />
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center" />
 
     <LinearLayout
         android:id="@+id/weather_data_layout"

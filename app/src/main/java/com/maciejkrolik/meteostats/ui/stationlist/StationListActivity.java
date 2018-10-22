@@ -30,7 +30,7 @@ public class StationListActivity extends AppCompatActivity
         AllStationsListFragment allStationsListFragment = new AllStationsListFragment();
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.content_station_list, allStationsListFragment, "station_list_fragment")
+                .replace(R.id.content_station_list, allStationsListFragment, "station_list_fragment")
                 .commit();
 
         Toolbar toolbar = findViewById(R.id.toolbar);

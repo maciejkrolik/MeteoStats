@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -23,6 +25,11 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
     public static final String DATE =
             "com.maciejkrolik.meteostats.ui.stationdetail.DATE";
 
+    private static final String rainFragmentTag = "rain_fragment";
+    private static final String waterFragmentTag = "water_fragment";
+    private static final String windDirectionFragmentTag = "wind_direction_fragment";
+    private static final String windLevelFragmentTag = "wind_level_fragment";
+
     String date;
 
     @Override
@@ -40,33 +47,42 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
 
         setTitle(stationName);
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                .beginTransaction();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         if (stationData[0]) {
-            RainAndWaterFragment rainAndWaterFragment =
-                    createRainAndWaterFragment(stationNumber, "rain");
-            fragmentTransaction.replace(R.id.rain_frame_layout, rainAndWaterFragment);
-
+            Fragment rainFragment = fragmentManager.findFragmentByTag(rainFragmentTag);
+            if (rainFragment == null) {
+                RainAndWaterFragment rainAndWaterFragment =
+                        createRainAndWaterFragment(stationNumber, "rain");
+                fragmentTransaction.replace(R.id.rain_frame_layout, rainAndWaterFragment, rainFragmentTag);
+            }
         }
         if (stationData[1]) {
-            RainAndWaterFragment rainAndWaterFragment =
-                    createRainAndWaterFragment(stationNumber, "water");
-            fragmentTransaction.replace(R.id.water_frame_layout, rainAndWaterFragment);
-
+            Fragment waterFragment = fragmentManager.findFragmentByTag(waterFragmentTag);
+            if (waterFragment == null) {
+                RainAndWaterFragment rainAndWaterFragment =
+                        createRainAndWaterFragment(stationNumber, "water");
+                fragmentTransaction.replace(R.id.water_frame_layout, rainAndWaterFragment, waterFragmentTag);
+            }
         }
         if (stationData[2]) {
-            Bundle bundle = createBundle(stationNumber);
-            WindDirectionFragment windDirectionFragment = new WindDirectionFragment();
-            windDirectionFragment.setArguments(bundle);
-            fragmentTransaction.replace(R.id.wind_direction_frame_layout, windDirectionFragment);
-
+            Fragment fragment = fragmentManager.findFragmentByTag(windDirectionFragmentTag);
+            if (fragment == null) {
+                Bundle bundle = createBundle(stationNumber);
+                WindDirectionFragment windDirectionFragment = new WindDirectionFragment();
+                windDirectionFragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.wind_direction_frame_layout, windDirectionFragment, windDirectionFragmentTag);
+            }
         }
         if (stationData[3]) {
-            Bundle bundle = createBundle(stationNumber);
-            WindLevelFragment windLevelFragment = new WindLevelFragment();
-            windLevelFragment.setArguments(bundle);
-            fragmentTransaction.replace(R.id.wind_level_frame_layout, windLevelFragment);
+            Fragment fragment = fragmentManager.findFragmentByTag(windLevelFragmentTag);
+            if (fragment == null) {
+                Bundle bundle = createBundle(stationNumber);
+                WindLevelFragment windLevelFragment = new WindLevelFragment();
+                windLevelFragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.wind_level_frame_layout, windLevelFragment, windLevelFragmentTag);
+            }
         }
         fragmentTransaction.commit();
     }

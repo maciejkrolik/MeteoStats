@@ -18,7 +18,7 @@
     <string name="info_no_stations">Brak stacji o wybranych parametrach</string>
     <string name="action_date">Wybierz datę</string>
     <string name="action_search">Wyszukaj</string>
-    <string name="hello_blank_fragment">Pusty fragment</string>
     <string name="detail_time">Godz.</string>
     <string name="detail_direction">Kierunek</string>
+    <string name="about_info">Aplikacja wykorzystuje dane z serwisu pomiary.gdanskiewody.pl</string>
 </resources>

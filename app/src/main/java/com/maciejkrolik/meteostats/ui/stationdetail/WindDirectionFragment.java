@@ -14,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.maciejkrolik.meteostats.MeteoStatsApplication;
 import com.maciejkrolik.meteostats.R;
+import com.maciejkrolik.meteostats.data.StationRepository;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModel;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModelFactory;
@@ -67,11 +69,17 @@ public class WindDirectionFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        StationRepository stationRepository =
+                ((MeteoStatsApplication) getActivity().getApplication())
+                        .getApplicationComponent()
+                        .getStationRepository();
+
         WeatherDataViewModel viewModel = ViewModelProviders
                 .of(this, new WeatherDataViewModelFactory(
                         stationNumber,
                         "winddir",
-                        date))
+                        date,
+                        stationRepository))
                 .get(WeatherDataViewModel.class);
 
         viewModel.getMeasurementsList().observe(this, new Observer<StationMeasurementsList>() {

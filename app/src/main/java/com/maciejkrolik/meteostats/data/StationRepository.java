@@ -20,17 +20,19 @@ import retrofit2.Response;
 @Singleton
 public class StationRepository {
 
-    private final GdanskWatersClient client;
+    private final GdanskWatersClient stationClient;
+    private final StationDao stationDao;
 
     @Inject
-    StationRepository(GdanskWatersClient client) {
-        this.client = client;
+    StationRepository(GdanskWatersClient stationClient, StationDao stationDao) {
+        this.stationClient = stationClient;
+        this.stationDao = stationDao;
     }
 
     public LiveData<List<Station>> getAllStations() {
         final MutableLiveData<List<Station>> data = new MutableLiveData<>();
 
-        client.listStations().enqueue(new Callback<StationList>() {
+        stationClient.listStations().enqueue(new Callback<StationList>() {
 
             @Override
             public void onResponse(Call<StationList> call, Response<StationList> response) {
@@ -53,7 +55,7 @@ public class StationRepository {
                                                                  String date) {
         final MutableLiveData<StationMeasurementsList> data = new MutableLiveData<>();
 
-        client.getMeasurements(stationNumber, measurementSymbol, date).enqueue(new Callback<StationMeasurementsList>() {
+        stationClient.getMeasurements(stationNumber, measurementSymbol, date).enqueue(new Callback<StationMeasurementsList>() {
             @Override
             public void onResponse(Call<StationMeasurementsList> call, Response<StationMeasurementsList> response) {
                 data.setValue(response.body());
@@ -67,5 +69,17 @@ public class StationRepository {
             }
         });
         return data;
+    }
+
+    public LiveData<Station> getSavedStation(int no) {
+        return stationDao.getSavedStationById(no);
+    }
+
+    public void saveStation(Station station) {
+        stationDao.saveStation(station);
+    }
+
+    public void deleteStation(Station station) {
+        stationDao.deleteStation(station);
     }
 }

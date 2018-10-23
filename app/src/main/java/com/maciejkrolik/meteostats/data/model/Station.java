@@ -1,7 +1,12 @@
 package com.maciejkrolik.meteostats.data.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity
 public class Station {
 
+    @PrimaryKey
     private int no;
     private String name;
     private boolean rain;
@@ -31,5 +36,29 @@ public class Station {
 
     public boolean isWindlevel() {
         return windlevel;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRain(boolean rain) {
+        this.rain = rain;
+    }
+
+    public void setWater(boolean water) {
+        this.water = water;
+    }
+
+    public void setWinddir(boolean winddir) {
+        this.winddir = winddir;
+    }
+
+    public void setWindlevel(boolean windlevel) {
+        this.windlevel = windlevel;
     }
 }

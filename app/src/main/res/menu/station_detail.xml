@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/action_add_favorite"
+        android:icon="@drawable/ic_nav_favorite_white_border"
+        android:orderInCategory="50"
+        android:title="@string/add_favorite_title"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_choose_date"
         android:icon="@drawable/ic_menu_date_chooser"
         android:orderInCategory="100"

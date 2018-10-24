@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
@@ -110,14 +111,17 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_choose_date:
+                DialogFragment fragment = new DatePickerDialogFragment();
+                fragment.show(getSupportFragmentManager(), "datePicker");
 
-        if (id == R.id.action_choose_date) {
-            DialogFragment fragment = new DatePickerDialogFragment();
-            fragment.show(getSupportFragmentManager(), "datePicker");
+            case R.id.action_add_favorite:
+                Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+                item.setIcon(R.drawable.ic_nav_favorite_white);
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

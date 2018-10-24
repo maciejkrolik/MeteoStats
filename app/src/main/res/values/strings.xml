@@ -23,4 +23,5 @@
     <string name="detail_time">Hour</string>
     <string name="detail_direction">Direction</string>
     <string name="about_info">Application uses data from pomiary.gdanskiewody.pl</string>
+    <string name="add_favorite_title">Add to favorite</string>
 </resources>

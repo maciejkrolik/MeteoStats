@@ -22,11 +22,11 @@ public class FavoriteStationsListFragment extends StationListBaseFragment {
                         .getApplicationComponent()
                         .getStationRepository();
 
-        AllStationsViewModel viewModel = ViewModelProviders
+        FavoriteStationsViewModel viewModel = ViewModelProviders
                 .of(this, new StationListViewModelFactory(stationRepository))
-                .get(AllStationsViewModel.class);
+                .get(FavoriteStationsViewModel.class);
 
-        viewModel.getAllStations().observe(this, new Observer<List<Station>>() {
+        viewModel.getFavoriteStations().observe(this, new Observer<List<Station>>() {
             @Override
             public void onChanged(@Nullable List<Station> stations) {
                 favoriteStations = stations;

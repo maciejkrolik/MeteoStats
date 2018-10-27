@@ -26,12 +26,8 @@ import java.util.Set;
 public abstract class StationListBaseFragment extends Fragment
         implements OnStationClickListener {
 
-    public static final String STATION_NAME_MESSAGE =
-            "com.maciejkrolik.meteostats.ui.stationlist.STATION_NAME_MESSAGE";
-    public static final String STATION_NUMBER_MESSAGE =
-            "com.maciejkrolik.meteostats.ui.stationlist.STATION_NUMBER_MESSAGE";
-    public static final String STATION_DATA_MESSAGE =
-            "com.maciejkrolik.meteostats.ui.stationlist.STATION_DATA_MESSAGE";
+    public static final String STATION_MESSAGE =
+            "com.maciejkrolik.meteostats.ui.stationlist.STATION_MESSAGE";
 
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
@@ -113,20 +109,9 @@ public abstract class StationListBaseFragment extends Fragment
 
     @Override
     public final void onStationClick(int position) {
-        String stationName = visibleStations.get(position).getName();
-        int stationNumber = visibleStations.get(position).getNo();
-
-        boolean[] availableStationData = {
-                visibleStations.get(position).isRain(),
-                visibleStations.get(position).isWater(),
-                visibleStations.get(position).isWinddir(),
-                visibleStations.get(position).isWindlevel()
-        };
-
+        Station station = visibleStations.get(position);
         Intent intent = new Intent(getActivity(), StationDetailsActivity.class);
-        intent.putExtra(STATION_NAME_MESSAGE, stationName);
-        intent.putExtra(STATION_NUMBER_MESSAGE, stationNumber);
-        intent.putExtra(STATION_DATA_MESSAGE, availableStationData);
+        intent.putExtra(STATION_MESSAGE, station);
         startActivity(intent);
     }
 

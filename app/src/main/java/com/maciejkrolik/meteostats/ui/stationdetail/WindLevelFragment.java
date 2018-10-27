@@ -65,7 +65,7 @@ public class WindLevelFragment extends Fragment {
         progressBar = rootView.findViewById(R.id.wind_level_fragment_progress_bar);
         lineChart = rootView.findViewById(R.id.wind_level_line_chart);
 
-        stationNumber = getArguments().getInt(StationListBaseFragment.STATION_NUMBER_MESSAGE);
+        stationNumber = getArguments().getInt(StationDetailsActivity.STATION_NUMBER_MESSAGE);
         date = getArguments().getString(StationDetailsActivity.DATE);
 
         return rootView;

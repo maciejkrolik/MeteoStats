@@ -18,6 +18,12 @@ public class StationListViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new AllStationsViewModel(stationRepository);
+        if (modelClass.isAssignableFrom(AllStationsViewModel.class)) {
+            return (T) new AllStationsViewModel(stationRepository);
+        } else if (modelClass.isAssignableFrom(FavoriteStationsViewModel.class)) {
+            return (T) new FavoriteStationsViewModel((stationRepository));
+        } else {
+            throw new IllegalArgumentException("ViewModel not found");
+        }
     }
 }

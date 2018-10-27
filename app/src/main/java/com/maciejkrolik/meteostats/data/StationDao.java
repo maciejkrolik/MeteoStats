@@ -14,14 +14,11 @@ import java.util.List;
 public interface StationDao {
 
     @Query("SELECT * FROM Station")
-    LiveData<List<Station>> getSavedStations();
-
-    @Query("SELECT * FROM Station WHERE `no` = :no")
-    LiveData<Station> getSavedStationById(int no);
+    LiveData<List<Station>> getFavoriteStations();
 
     @Insert
-    Long saveStation(Station station);
+    Long addToFavoriteStations(Station station);
 
     @Delete
-    void deleteStation(Station station);
+    void deleteFromFavoriteStations(Station station);
 }

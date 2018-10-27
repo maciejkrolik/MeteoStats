@@ -71,15 +71,15 @@ public class StationRepository {
         return data;
     }
 
-    public LiveData<Station> getSavedStation(int no) {
-        return stationDao.getSavedStationById(no);
+    public LiveData<List<Station>> getListOfFavoriteStations() {
+        return stationDao.getFavoriteStations();
     }
 
     public void saveStation(Station station) {
-        stationDao.saveStation(station);
+        stationDao.addToFavoriteStations(station);
     }
 
     public void deleteStation(Station station) {
-        stationDao.deleteStation(station);
+        stationDao.deleteFromFavoriteStations(station);
     }
 }

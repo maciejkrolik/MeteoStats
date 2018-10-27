@@ -2,6 +2,7 @@ package com.maciejkrolik.meteostats.ui.stationdetail;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,10 @@ import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.maciejkrolik.meteostats.MeteoStatsApplication;
 import com.maciejkrolik.meteostats.R;
+import com.maciejkrolik.meteostats.data.StationRepository;
+import com.maciejkrolik.meteostats.data.model.Station;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
 import com.maciejkrolik.meteostats.util.StringUtils;
 
@@ -25,6 +29,11 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
             "com.maciejkrolik.meteostats.ui.stationdetail.MEASUREMENT_SYMBOL";
     public static final String DATE =
             "com.maciejkrolik.meteostats.ui.stationdetail.DATE";
+    public static final String STATION_NUMBER_MESSAGE =
+            "com.maciejkrolik.meteostats.ui.stationdetail.STATION_NUMBER_MESSAGE";
+
+    private StationRepository stationRepository;
+    private Station station;
 
     private static final String rainFragmentTag = "rain_fragment";
     private static final String waterFragmentTag = "water_fragment";
@@ -39,19 +48,20 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
         setContentView(R.layout.activity_station_details);
 
         Intent intent = getIntent();
-        final String stationName = intent.getStringExtra(StationListBaseFragment.STATION_NAME_MESSAGE);
-        final int stationNumber =
-                intent.getIntExtra(StationListBaseFragment.STATION_NUMBER_MESSAGE, -1);
-        final boolean[] stationData =
-                intent.getBooleanArrayExtra(StationListBaseFragment.STATION_DATA_MESSAGE);
+        station = intent.getParcelableExtra(StationListBaseFragment.STATION_MESSAGE);
+        final int stationNumber = station.getNo();
         date = intent.getStringExtra(DATE) != null ? intent.getStringExtra(DATE) : StringUtils.getTodayDateAsString();
 
-        setTitle(stationName);
+        setTitle(station.getName());
+
+        stationRepository = ((MeteoStatsApplication) getApplication())
+                .getApplicationComponent()
+                .getStationRepository();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if (stationData[0]) {
+        if (station.isRain()) {
             Fragment rainFragment = fragmentManager.findFragmentByTag(rainFragmentTag);
             if (rainFragment == null) {
                 RainAndWaterFragment rainAndWaterFragment =
@@ -59,7 +69,7 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
                 fragmentTransaction.replace(R.id.rain_frame_layout, rainAndWaterFragment, rainFragmentTag);
             }
         }
-        if (stationData[1]) {
+        if (station.isWater()) {
             Fragment waterFragment = fragmentManager.findFragmentByTag(waterFragmentTag);
             if (waterFragment == null) {
                 RainAndWaterFragment rainAndWaterFragment =
@@ -67,7 +77,7 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
                 fragmentTransaction.replace(R.id.water_frame_layout, rainAndWaterFragment, waterFragmentTag);
             }
         }
-        if (stationData[2]) {
+        if (station.isWinddir()) {
             Fragment fragment = fragmentManager.findFragmentByTag(windDirectionFragmentTag);
             if (fragment == null) {
                 Bundle bundle = createBundle(stationNumber);
@@ -76,7 +86,7 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
                 fragmentTransaction.replace(R.id.wind_direction_frame_layout, windDirectionFragment, windDirectionFragmentTag);
             }
         }
-        if (stationData[3]) {
+        if (station.isWindlevel()) {
             Fragment fragment = fragmentManager.findFragmentByTag(windLevelFragmentTag);
             if (fragment == null) {
                 Bundle bundle = createBundle(stationNumber);
@@ -98,7 +108,7 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
 
     private Bundle createBundle(int stationNumber) {
         Bundle bundle = new Bundle();
-        bundle.putInt(StationListBaseFragment.STATION_NUMBER_MESSAGE, stationNumber);
+        bundle.putInt(STATION_NUMBER_MESSAGE, stationNumber);
         bundle.putString(DATE, date);
         return bundle;
     }
@@ -106,6 +116,12 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.station_detail, menu);
+        if (station.isSaved()) {
+            menu.findItem(R.id.action_add_favorite).setIcon(R.drawable.ic_nav_favorite_white);
+        } else {
+            menu.findItem(R.id.action_add_favorite).setIcon(R.drawable.ic_nav_favorite_white_border);
+        }
+
         return true;
     }
 
@@ -115,10 +131,19 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
             case R.id.action_choose_date:
                 DialogFragment fragment = new DatePickerDialogFragment();
                 fragment.show(getSupportFragmentManager(), "datePicker");
+                return true;
 
             case R.id.action_add_favorite:
-                Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
-                item.setIcon(R.drawable.ic_nav_favorite_white);
+                if (!station.isSaved()) {
+                    item.setIcon(R.drawable.ic_nav_favorite_white);
+                    station.setSaved(true);
+                } else {
+                    item.setIcon(R.drawable.ic_nav_favorite_white_border);
+                    station.setSaved(false);
+                }
+                new ManageFavoriteTask().execute(station);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -134,5 +159,18 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
         intent.putExtra(DATE, chosenDate);
         startActivity(intent);
         finish();
+    }
+
+    private class ManageFavoriteTask extends AsyncTask<Station, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Station... stations) {
+            if (stations[0].isSaved()) {
+                stationRepository.saveStation(stations[0]);
+            } else {
+                stationRepository.deleteStation(stations[0]);
+            }
+            return null;
+        }
     }
 }

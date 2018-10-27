@@ -69,7 +69,7 @@ public class RainAndWaterFragment extends Fragment {
         barChart = rootView.findViewById(R.id.rain_water_bar_chart);
         TextView measurementTitle = rootView.findViewById(R.id.rain_water_measurement_title);
 
-        stationNumber = getArguments().getInt(StationListBaseFragment.STATION_NUMBER_MESSAGE);
+        stationNumber = getArguments().getInt(StationDetailsActivity.STATION_NUMBER_MESSAGE);
         measurementSymbol = getArguments().getString(StationDetailsActivity.MEASUREMENT_SYMBOL);
         date = getArguments().getString(StationDetailsActivity.DATE);
 
@@ -89,6 +89,8 @@ public class RainAndWaterFragment extends Fragment {
                 ((MeteoStatsApplication) getActivity().getApplication())
                         .getApplicationComponent()
                         .getStationRepository();
+
+        Log.d("TEST", String.valueOf(stationNumber));
 
         WeatherDataViewModel viewModel = ViewModelProviders
                 .of(this, new WeatherDataViewModelFactory(

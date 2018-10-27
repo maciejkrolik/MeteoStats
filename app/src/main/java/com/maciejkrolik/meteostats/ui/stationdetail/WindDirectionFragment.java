@@ -59,7 +59,7 @@ public class WindDirectionFragment extends Fragment {
         weatherDataLayout = rootView.findViewById(R.id.weather_data_layout);
         progressBar = rootView.findViewById(R.id.wind_direction_progress_bar);
 
-        stationNumber = getArguments().getInt(StationListBaseFragment.STATION_NUMBER_MESSAGE);
+        stationNumber = getArguments().getInt(StationDetailsActivity.STATION_NUMBER_MESSAGE);
         date = getArguments().getString(StationDetailsActivity.DATE);
 
         return rootView;

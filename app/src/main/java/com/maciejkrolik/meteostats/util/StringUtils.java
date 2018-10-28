@@ -16,7 +16,7 @@ public class StringUtils {
     }
 
     public static String headingToString(float x) {
-        String directions[] = {"N", "NE", "E", "SE", "S", "SW", "W", "NW", "N"};
+        String directions[] = {"S", "SW", "W", "NW", "N", "NE", "E", "SE", "S"};
         return directions[Math.round(((x % 360) / 45))];
     }
 

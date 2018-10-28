@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
-import android.widget.Toast;
 
 import com.maciejkrolik.meteostats.MeteoStatsApplication;
 import com.maciejkrolik.meteostats.R;
@@ -21,6 +20,7 @@ import com.maciejkrolik.meteostats.data.model.Station;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
 import com.maciejkrolik.meteostats.util.StringUtils;
 
+import java.lang.ref.WeakReference;
 import java.util.Locale;
 
 public class StationDetailsActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -32,7 +32,6 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
     public static final String STATION_NUMBER_MESSAGE =
             "com.maciejkrolik.meteostats.ui.stationdetail.STATION_NUMBER_MESSAGE";
 
-    private StationRepository stationRepository;
     private Station station;
 
     private static final String rainFragmentTag = "rain_fragment";
@@ -53,10 +52,6 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
         date = intent.getStringExtra(DATE) != null ? intent.getStringExtra(DATE) : StringUtils.getTodayDateAsString();
 
         setTitle(station.getName());
-
-        stationRepository = ((MeteoStatsApplication) getApplication())
-                .getApplicationComponent()
-                .getStationRepository();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -141,7 +136,7 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
                     item.setIcon(R.drawable.ic_nav_favorite_white_border);
                     station.setSaved(false);
                 }
-                new ManageFavoriteTask().execute(station);
+                new ManageFavoriteTask(this).execute(station);
                 return true;
 
             default:
@@ -161,14 +156,33 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
         finish();
     }
 
-    private class ManageFavoriteTask extends AsyncTask<Station, Void, Void> {
+    private static class ManageFavoriteTask extends AsyncTask<Station, Void, Void> {
+
+        private WeakReference<StationDetailsActivity> activityWeakReference;
+
+        ManageFavoriteTask(StationDetailsActivity context) {
+            activityWeakReference = new WeakReference<>(context);
+        }
 
         @Override
         protected Void doInBackground(Station... stations) {
-            if (stations[0].isSaved()) {
-                stationRepository.saveStation(stations[0]);
+            Station station = stations[0];
+
+            StationDetailsActivity activity = activityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return null;
             } else {
-                stationRepository.deleteStation(stations[0]);
+                StationRepository stationRepository = ((MeteoStatsApplication) activityWeakReference
+                        .get()
+                        .getApplication())
+                        .getApplicationComponent()
+                        .getStationRepository();
+
+                if (station.isSaved()) {
+                    stationRepository.saveStation(station);
+                } else {
+                    stationRepository.deleteStation(station);
+                }
             }
             return null;
         }

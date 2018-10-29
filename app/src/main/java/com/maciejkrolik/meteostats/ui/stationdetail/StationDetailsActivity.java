@@ -23,22 +23,22 @@ import com.maciejkrolik.meteostats.util.StringUtils;
 import java.lang.ref.WeakReference;
 import java.util.Locale;
 
-public class StationDetailsActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class StationDetailsActivity extends AppCompatActivity
+        implements DatePickerDialog.OnDateSetListener {
 
-    public static final String MEASUREMENT_SYMBOL =
-            "com.maciejkrolik.meteostats.ui.stationdetail.MEASUREMENT_SYMBOL";
-    public static final String DATE =
-            "com.maciejkrolik.meteostats.ui.stationdetail.DATE";
-    public static final String STATION_NUMBER_MESSAGE =
-            "com.maciejkrolik.meteostats.ui.stationdetail.STATION_NUMBER_MESSAGE";
+    public static final String EXTRA_MEASUREMENT_SYMBOL =
+            "com.maciejkrolik.meteostats.ui.stationdetail.EXTRA_MEASUREMENT_SYMBOL";
+    public static final String EXTRA_DATE =
+            "com.maciejkrolik.meteostats.ui.stationdetail.EXTRA_DATE";
+    public static final String EXTRA_STATION_NUMBER =
+            "com.maciejkrolik.meteostats.ui.stationdetail.EXTRA_STATION_NUMBER";
+
+    private static final String RAIN_FRAGMENT_TAG = "RAIN_FRAGMENT_TAG";
+    private static final String WATER_FRAGMENT_TAG = "WATER_FRAGMENT_TAG";
+    private static final String WIND_DIRECTION_FRAGMENT_TAG = "WIND_DIRECTION_FRAGMENT_TAG";
+    private static final String WIND_LEVEL_FRAGMENT_TAG = "WIND_LEVEL_FRAGMENT_TAG";
 
     private Station station;
-
-    private static final String rainFragmentTag = "rain_fragment";
-    private static final String waterFragmentTag = "water_fragment";
-    private static final String windDirectionFragmentTag = "wind_direction_fragment";
-    private static final String windLevelFragmentTag = "wind_level_fragment";
-
     String date;
 
     @Override
@@ -47,9 +47,9 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
         setContentView(R.layout.activity_station_details);
 
         Intent intent = getIntent();
-        station = intent.getParcelableExtra(StationListBaseFragment.STATION_MESSAGE);
+        station = intent.getParcelableExtra(StationListBaseFragment.EXTRA_STATION);
         final int stationNumber = station.getNo();
-        date = intent.getStringExtra(DATE) != null ? intent.getStringExtra(DATE) : StringUtils.getTodayDateAsString();
+        date = intent.getStringExtra(EXTRA_DATE) != null ? intent.getStringExtra(EXTRA_DATE) : StringUtils.getTodayDateAsString();
 
         setTitle(station.getName());
 
@@ -57,37 +57,37 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         if (station.isRain()) {
-            Fragment rainFragment = fragmentManager.findFragmentByTag(rainFragmentTag);
+            Fragment rainFragment = fragmentManager.findFragmentByTag(RAIN_FRAGMENT_TAG);
             if (rainFragment == null) {
                 RainAndWaterFragment rainAndWaterFragment =
                         createRainAndWaterFragment(stationNumber, "rain");
-                fragmentTransaction.replace(R.id.rain_frame_layout, rainAndWaterFragment, rainFragmentTag);
+                fragmentTransaction.replace(R.id.rain_frame_layout, rainAndWaterFragment, RAIN_FRAGMENT_TAG);
             }
         }
         if (station.isWater()) {
-            Fragment waterFragment = fragmentManager.findFragmentByTag(waterFragmentTag);
+            Fragment waterFragment = fragmentManager.findFragmentByTag(WATER_FRAGMENT_TAG);
             if (waterFragment == null) {
                 RainAndWaterFragment rainAndWaterFragment =
                         createRainAndWaterFragment(stationNumber, "water");
-                fragmentTransaction.replace(R.id.water_frame_layout, rainAndWaterFragment, waterFragmentTag);
+                fragmentTransaction.replace(R.id.water_frame_layout, rainAndWaterFragment, WATER_FRAGMENT_TAG);
             }
         }
         if (station.isWinddir()) {
-            Fragment fragment = fragmentManager.findFragmentByTag(windDirectionFragmentTag);
+            Fragment fragment = fragmentManager.findFragmentByTag(WIND_DIRECTION_FRAGMENT_TAG);
             if (fragment == null) {
                 Bundle bundle = createBundle(stationNumber);
                 WindDirectionFragment windDirectionFragment = new WindDirectionFragment();
                 windDirectionFragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.wind_direction_frame_layout, windDirectionFragment, windDirectionFragmentTag);
+                fragmentTransaction.replace(R.id.wind_direction_frame_layout, windDirectionFragment, WIND_DIRECTION_FRAGMENT_TAG);
             }
         }
         if (station.isWindlevel()) {
-            Fragment fragment = fragmentManager.findFragmentByTag(windLevelFragmentTag);
+            Fragment fragment = fragmentManager.findFragmentByTag(WIND_LEVEL_FRAGMENT_TAG);
             if (fragment == null) {
                 Bundle bundle = createBundle(stationNumber);
                 WindLevelFragment windLevelFragment = new WindLevelFragment();
                 windLevelFragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.wind_level_frame_layout, windLevelFragment, windLevelFragmentTag);
+                fragmentTransaction.replace(R.id.wind_level_frame_layout, windLevelFragment, WIND_LEVEL_FRAGMENT_TAG);
             }
         }
         fragmentTransaction.commit();
@@ -95,7 +95,7 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
 
     private RainAndWaterFragment createRainAndWaterFragment(int stationNumber, String measurementSymbol) {
         Bundle bundle = createBundle(stationNumber);
-        bundle.putString(MEASUREMENT_SYMBOL, measurementSymbol);
+        bundle.putString(EXTRA_MEASUREMENT_SYMBOL, measurementSymbol);
         RainAndWaterFragment rainAndWaterFragment = new RainAndWaterFragment();
         rainAndWaterFragment.setArguments(bundle);
         return rainAndWaterFragment;
@@ -103,8 +103,8 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
 
     private Bundle createBundle(int stationNumber) {
         Bundle bundle = new Bundle();
-        bundle.putInt(STATION_NUMBER_MESSAGE, stationNumber);
-        bundle.putString(DATE, date);
+        bundle.putInt(EXTRA_STATION_NUMBER, stationNumber);
+        bundle.putString(EXTRA_DATE, date);
         return bundle;
     }
 
@@ -151,7 +151,7 @@ public class StationDetailsActivity extends AppCompatActivity implements DatePic
                 + String.format(Locale.US, "%02d", dayOfMonth);
 
         Intent intent = getIntent();
-        intent.putExtra(DATE, chosenDate);
+        intent.putExtra(EXTRA_DATE, chosenDate);
         startActivity(intent);
         finish();
     }

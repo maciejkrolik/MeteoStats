@@ -20,7 +20,6 @@ import com.maciejkrolik.meteostats.data.StationRepository;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModel;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModelFactory;
-import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
 import com.maciejkrolik.meteostats.util.StringUtils;
 
 import java.util.ArrayList;
@@ -59,8 +58,8 @@ public class WindDirectionFragment extends Fragment {
         weatherDataLayout = rootView.findViewById(R.id.weather_data_layout);
         progressBar = rootView.findViewById(R.id.wind_direction_progress_bar);
 
-        stationNumber = getArguments().getInt(StationDetailsActivity.STATION_NUMBER_MESSAGE);
-        date = getArguments().getString(StationDetailsActivity.DATE);
+        stationNumber = getArguments().getInt(StationDetailsActivity.EXTRA_STATION_NUMBER);
+        date = getArguments().getString(StationDetailsActivity.EXTRA_DATE);
 
         return rootView;
     }

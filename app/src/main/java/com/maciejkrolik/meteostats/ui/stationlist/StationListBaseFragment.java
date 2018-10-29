@@ -1,13 +1,20 @@
 package com.maciejkrolik.meteostats.ui.stationlist;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -24,10 +31,11 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class StationListBaseFragment extends Fragment
-        implements OnStationClickListener {
+        implements OnStationClickListener, DialogInterface.OnDismissListener {
 
-    public static final String STATION_MESSAGE =
-            "com.maciejkrolik.meteostats.ui.stationlist.STATION_MESSAGE";
+    public static final String EXTRA_STATION =
+            "com.maciejkrolik.meteostats.ui.stationlist.EXTRA_STATION";
+    private static final String FILTER_DIALOG_TAG = "FILTER_DIALOG_TAG";
 
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
@@ -44,6 +52,8 @@ public abstract class StationListBaseFragment extends Fragment
     public final View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                    Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_station_list, container, false);
+
+        setHasOptionsMenu(true);
 
         progressBar = rootView.findViewById(R.id.stations_progress_bar);
         infoTextView = rootView.findViewById(R.id.info_text_view);
@@ -70,19 +80,15 @@ public abstract class StationListBaseFragment extends Fragment
     final void setupChosenStations() {
         progressBar.setVisibility(View.GONE);
 
-        this.stations = setChosenStations();
+        stations = getChosenStations();
 
         visibleStations.clear();
-        visibleStations.addAll(filterChosenStations(this.stations));
-        if (visibleStations.isEmpty()) hideList();
-        else {
-            showList();
-            adapter.notifyDataSetChanged();
-        }
+        visibleStations.addAll(filterChosenStations(stations));
+
+        setVisibilityOfTheList();
     }
 
-    @NonNull
-    abstract List<Station> setChosenStations();
+    abstract List<Station> getChosenStations();
 
     private List<Station> filterChosenStations(List<Station> allStations) {
         Set<Station> chosenStations = new HashSet<>();
@@ -108,10 +114,53 @@ public abstract class StationListBaseFragment extends Fragment
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.station_list, menu);
+        MenuItem item = menu.findItem(R.id.action_search_list);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchStationList(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchStationList(newText);
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_sort_dialog) {
+            showFilterDialog();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showFilterDialog() {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        DialogFragment dialogFragment = new FilterStationsDialogFragment();
+        dialogFragment.show(fragmentManager, FILTER_DIALOG_TAG);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        setupChosenStations();
+    }
+
+    @Override
     public final void onStationClick(int position) {
         Station station = visibleStations.get(position);
         Intent intent = new Intent(getActivity(), StationDetailsActivity.class);
-        intent.putExtra(STATION_MESSAGE, station);
+        intent.putExtra(EXTRA_STATION, station);
         startActivity(intent);
     }
 
@@ -131,20 +180,17 @@ public abstract class StationListBaseFragment extends Fragment
             }
         }
 
-        if (visibleStations.isEmpty()) hideList();
-        else {
-            showList();
+        setVisibilityOfTheList();
+    }
+
+    private void setVisibilityOfTheList() {
+        if (visibleStations.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            infoTextView.setVisibility(View.VISIBLE);
+        } else {
+            infoTextView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             adapter.notifyDataSetChanged();
         }
-    }
-
-    private void showList() {
-        infoTextView.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
-    }
-
-    private void hideList() {
-        recyclerView.setVisibility(View.GONE);
-        infoTextView.setVisibility(View.VISIBLE);
     }
 }

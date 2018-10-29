@@ -1,6 +1,5 @@
 package com.maciejkrolik.meteostats.ui.stationlist;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -9,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.util.SharedPreferenceUtils;
@@ -49,9 +49,9 @@ public class FilterStationsDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        final Activity activity = getActivity();
-        if (activity instanceof DialogInterface.OnDismissListener) {
-            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) parentFragment).onDismiss(dialog);
         }
     }
 }

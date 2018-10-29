@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +22,8 @@ import com.maciejkrolik.meteostats.MeteoStatsApplication;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.StationRepository;
 import com.maciejkrolik.meteostats.data.model.StationMeasurementsList;
-import com.maciejkrolik.meteostats.di.ApplicationComponent;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModel;
 import com.maciejkrolik.meteostats.ui.stationdetail.viewmodel.WeatherDataViewModelFactory;
-import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
 import com.maciejkrolik.meteostats.util.StringUtils;
 
 import java.util.ArrayList;
@@ -69,9 +66,9 @@ public class RainAndWaterFragment extends Fragment {
         barChart = rootView.findViewById(R.id.rain_water_bar_chart);
         TextView measurementTitle = rootView.findViewById(R.id.rain_water_measurement_title);
 
-        stationNumber = getArguments().getInt(StationDetailsActivity.STATION_NUMBER_MESSAGE);
-        measurementSymbol = getArguments().getString(StationDetailsActivity.MEASUREMENT_SYMBOL);
-        date = getArguments().getString(StationDetailsActivity.DATE);
+        stationNumber = getArguments().getInt(StationDetailsActivity.EXTRA_STATION_NUMBER);
+        measurementSymbol = getArguments().getString(StationDetailsActivity.EXTRA_MEASUREMENT_SYMBOL);
+        date = getArguments().getString(StationDetailsActivity.EXTRA_DATE);
 
         if (measurementSymbol.equals("rain"))
             measurementTitle.setText(R.string.nav_rain);
@@ -89,8 +86,6 @@ public class RainAndWaterFragment extends Fragment {
                 ((MeteoStatsApplication) getActivity().getApplication())
                         .getApplicationComponent()
                         .getStationRepository();
-
-        Log.d("TEST", String.valueOf(stationNumber));
 
         WeatherDataViewModel viewModel = ViewModelProviders
                 .of(this, new WeatherDataViewModelFactory(

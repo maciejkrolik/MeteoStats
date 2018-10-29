@@ -37,7 +37,7 @@ public class FavoriteStationsListFragment extends StationListBaseFragment {
 
     @NonNull
     @Override
-    List<Station> setChosenStations() {
+    List<Station> getChosenStations() {
         return favoriteStations;
     }
 }

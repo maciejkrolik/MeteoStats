@@ -3,6 +3,7 @@ package com.maciejkrolik.meteostats.ui.stationdetail;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
 import java.util.Calendar;
@@ -10,6 +11,7 @@ import java.util.Date;
 
 public class DatePickerDialogFragment extends DialogFragment {
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar c = Calendar.getInstance();

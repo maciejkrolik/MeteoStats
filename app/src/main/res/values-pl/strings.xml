@@ -5,7 +5,6 @@
     <string name="navigation_drawer_close">Zamknij pasek nawigacyjny</string>
     <string name="nav_rain">Opad</string>
     <string name="nav_water">Poziom wody</string>
-    <string name="retrofit_error_message">Coś poszło nie tak!</string>
     <string name="retrofit_data_error_message">Błąd pobranych danych!</string>
     <string name="dialog_sort_title">Wybierz dane</string>
     <string name="action_filter_stations">Filtruj</string>

@@ -20,6 +20,8 @@ import retrofit2.Response;
 @Singleton
 public class StationRepository {
 
+    private static final String TAG = StationRepository.class.getSimpleName();
+
     private final GdanskWatersClient stationClient;
     private final StationDao stationDao;
 
@@ -38,7 +40,7 @@ public class StationRepository {
             public void onResponse(Call<StationList> call, Response<StationList> response) {
                 data.setValue(response.body().getData());
 
-                Log.d("TEST", "Downloaded data from the internet");
+                Log.i(TAG, "Downloaded data from the internet");
             }
 
             @Override
@@ -60,7 +62,7 @@ public class StationRepository {
             public void onResponse(Call<StationMeasurementsList> call, Response<StationMeasurementsList> response) {
                 data.setValue(response.body());
 
-                Log.d("TEST", "Downloaded data from the internet - DETAILS");
+                Log.i(TAG, "Downloaded data from the internet - DETAILS");
             }
 
             @Override

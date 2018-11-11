@@ -43,7 +43,7 @@ public abstract class StationListBaseFragment extends Fragment
     private TextView infoTextView;
 
     private List<Station> stations;
-    private List<Station> visibleStations = new ArrayList<>();
+    private final List<Station> visibleStations = new ArrayList<>();
 
     public StationListBaseFragment() {
     }

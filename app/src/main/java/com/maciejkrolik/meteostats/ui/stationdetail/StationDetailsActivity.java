@@ -158,7 +158,7 @@ public class StationDetailsActivity extends AppCompatActivity
 
     private static class ManageFavoriteTask extends AsyncTask<Station, Void, Void> {
 
-        private WeakReference<StationDetailsActivity> activityWeakReference;
+        private final WeakReference<StationDetailsActivity> activityWeakReference;
 
         ManageFavoriteTask(StationDetailsActivity context) {
             activityWeakReference = new WeakReference<>(context);

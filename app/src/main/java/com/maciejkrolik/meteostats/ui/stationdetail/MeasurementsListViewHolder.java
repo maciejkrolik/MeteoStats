@@ -8,8 +8,8 @@ import com.maciejkrolik.meteostats.R;
 
 class MeasurementsListViewHolder extends RecyclerView.ViewHolder {
 
-    TextView valueTextView;
-    TextView timeTextView;
+    final TextView valueTextView;
+    final TextView timeTextView;
 
     MeasurementsListViewHolder(View itemView) {
         super(itemView);

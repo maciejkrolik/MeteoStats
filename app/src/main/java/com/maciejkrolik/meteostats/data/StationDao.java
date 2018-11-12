@@ -16,6 +16,9 @@ public interface StationDao {
     @Query("SELECT * FROM Station")
     LiveData<List<Station>> getFavoriteStations();
 
+    @Query("SELECT * FROM Station WHERE `no` = :no")
+    Station getStationByNo(int no);
+
     @Insert
     Long addToFavoriteStations(Station station);
 

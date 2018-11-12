@@ -77,6 +77,10 @@ public class StationRepository {
         return stationDao.getFavoriteStations();
     }
 
+    public Station getStationByNumber(int stationNumber) {
+        return stationDao.getStationByNo(stationNumber);
+    }
+
     public void saveStation(Station station) {
         stationDao.addToFavoriteStations(station);
     }

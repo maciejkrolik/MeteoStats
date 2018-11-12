@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
@@ -38,6 +39,7 @@ public class StationDetailsActivity extends AppCompatActivity
     private static final String WIND_DIRECTION_FRAGMENT_TAG = "WIND_DIRECTION_FRAGMENT_TAG";
     private static final String WIND_LEVEL_FRAGMENT_TAG = "WIND_LEVEL_FRAGMENT_TAG";
 
+    private StationRepository stationRepository;
     private Station station;
     String date;
 
@@ -52,6 +54,12 @@ public class StationDetailsActivity extends AppCompatActivity
         date = intent.getStringExtra(EXTRA_DATE) != null ? intent.getStringExtra(EXTRA_DATE) : StringUtils.getTodayDateAsString();
 
         setTitle(station.getName());
+
+        stationRepository = ((MeteoStatsApplication) getApplication())
+                .getApplicationComponent()
+                .getStationRepository();
+
+        new CheckFavoriteTask(this).execute(stationNumber);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -156,6 +164,33 @@ public class StationDetailsActivity extends AppCompatActivity
         finish();
     }
 
+    private static class CheckFavoriteTask extends AsyncTask<Integer, Void, Boolean> {
+
+        private final WeakReference<StationDetailsActivity> activityWeakReference;
+
+        CheckFavoriteTask(StationDetailsActivity context) {
+            activityWeakReference = new WeakReference<>(context);
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... ints) {
+            int stationNumber = ints[0];
+
+            StationDetailsActivity activity = activityWeakReference.get();
+            if (activity == null || activity.isFinishing()) {
+                return false;
+            } else {
+                return activity.stationRepository.getStationByNumber(stationNumber) != null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            activityWeakReference.get().station.setSaved(result);
+        }
+    }
+
     private static class ManageFavoriteTask extends AsyncTask<Station, Void, Void> {
 
         private final WeakReference<StationDetailsActivity> activityWeakReference;
@@ -172,16 +207,10 @@ public class StationDetailsActivity extends AppCompatActivity
             if (activity == null || activity.isFinishing()) {
                 return null;
             } else {
-                StationRepository stationRepository = ((MeteoStatsApplication) activityWeakReference
-                        .get()
-                        .getApplication())
-                        .getApplicationComponent()
-                        .getStationRepository();
-
                 if (station.isSaved()) {
-                    stationRepository.saveStation(station);
+                    activity.stationRepository.saveStation(station);
                 } else {
-                    stationRepository.deleteStation(station);
+                    activity.stationRepository.deleteStation(station);
                 }
             }
             return null;

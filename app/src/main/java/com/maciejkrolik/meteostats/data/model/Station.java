@@ -5,26 +5,38 @@ import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity
 public class Station implements Parcelable {
 
     @PrimaryKey
     private int no;
+
     private String name;
-    private boolean rain;
-    private boolean water;
-    private boolean winddir;
-    private boolean windlevel;
+
+    @SerializedName("rain")
+    private boolean hasRain;
+
+    @SerializedName("water")
+    private boolean hasWater;
+
+    @SerializedName("winddir")
+    private boolean hasWindDir;
+
+    @SerializedName("windlevel")
+    private boolean hasWindLevel;
+
     private boolean isSaved;
 
-    public Station(int no, String name, boolean rain, boolean water,
-                   boolean winddir, boolean windlevel, boolean isSaved) {
+    public Station(int no, String name, boolean hasRain, boolean hasWater,
+                   boolean hasWindDir, boolean hasWindLevel, boolean isSaved) {
         this.no = no;
         this.name = name;
-        this.rain = rain;
-        this.water = water;
-        this.winddir = winddir;
-        this.windlevel = windlevel;
+        this.hasRain = hasRain;
+        this.hasWater = hasWater;
+        this.hasWindDir = hasWindDir;
+        this.hasWindLevel = hasWindLevel;
         this.isSaved = isSaved;
     }
 
@@ -36,20 +48,20 @@ public class Station implements Parcelable {
         return name;
     }
 
-    public boolean isRain() {
-        return rain;
+    public boolean hasRain() {
+        return hasRain;
     }
 
-    public boolean isWater() {
-        return water;
+    public boolean hasWater() {
+        return hasWater;
     }
 
-    public boolean isWinddir() {
-        return winddir;
+    public boolean hasWindDir() {
+        return hasWindDir;
     }
 
-    public boolean isWindlevel() {
-        return windlevel;
+    public boolean hasWindLevel() {
+        return hasWindLevel;
     }
 
     public boolean isSaved() {
@@ -64,20 +76,20 @@ public class Station implements Parcelable {
         this.name = name;
     }
 
-    public void setRain(boolean rain) {
-        this.rain = rain;
+    public void setHasRain(boolean hasRain) {
+        this.hasRain = hasRain;
     }
 
-    public void setWater(boolean water) {
-        this.water = water;
+    public void setHasWater(boolean hasWater) {
+        this.hasWater = hasWater;
     }
 
-    public void setWinddir(boolean winddir) {
-        this.winddir = winddir;
+    public void setHasWindDir(boolean hasWindDir) {
+        this.hasWindDir = hasWindDir;
     }
 
-    public void setWindlevel(boolean windlevel) {
-        this.windlevel = windlevel;
+    public void setHasWindLevel(boolean hasWindLevel) {
+        this.hasWindLevel = hasWindLevel;
     }
 
     public void setSaved(boolean saved) {
@@ -93,10 +105,10 @@ public class Station implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(no);
         parcel.writeString(name);
-        parcel.writeByte((byte) (rain ? 1 : 0));
-        parcel.writeByte((byte) (water ? 1 : 0));
-        parcel.writeByte((byte) (winddir ? 1 : 0));
-        parcel.writeByte((byte) (windlevel ? 1 : 0));
+        parcel.writeByte((byte) (hasRain ? 1 : 0));
+        parcel.writeByte((byte) (hasWater ? 1 : 0));
+        parcel.writeByte((byte) (hasWindDir ? 1 : 0));
+        parcel.writeByte((byte) (hasWindLevel ? 1 : 0));
         parcel.writeByte((byte) (isSaved ? 1 : 0));
     }
 
@@ -105,12 +117,12 @@ public class Station implements Parcelable {
         public Station createFromParcel(Parcel parcel) {
             int no = parcel.readInt();
             String name = parcel.readString();
-            Boolean rain = parcel.readByte() != 0;
-            Boolean water = parcel.readByte() != 0;
-            Boolean winddir = parcel.readByte() != 0;
-            Boolean windlevel = parcel.readByte() != 0;
+            Boolean hasRain = parcel.readByte() != 0;
+            Boolean hasWater = parcel.readByte() != 0;
+            Boolean hasWindDir = parcel.readByte() != 0;
+            Boolean hasWindLevel = parcel.readByte() != 0;
             Boolean isSaved = parcel.readByte() != 0;
-            return new Station(no, name, rain, water, winddir, windlevel, isSaved);
+            return new Station(no, name, hasRain, hasWater, hasWindDir, hasWindLevel, isSaved);
         }
 
         @Override

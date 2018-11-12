@@ -97,10 +97,10 @@ public abstract class StationListBaseFragment extends Fragment
 
         for (Station station : allStations) {
             boolean[] stationData = {
-                    station.isRain(),
-                    station.isWater(),
-                    station.isWinddir(),
-                    station.isWindlevel()
+                    station.hasRain(),
+                    station.hasWater(),
+                    station.hasWindDir(),
+                    station.hasWindLevel()
             };
 
             for (int i = 0; i < checkedItems.length; i++) {

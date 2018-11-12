@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
@@ -64,7 +63,7 @@ public class StationDetailsActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if (station.isRain()) {
+        if (station.hasRain()) {
             Fragment rainFragment = fragmentManager.findFragmentByTag(RAIN_FRAGMENT_TAG);
             if (rainFragment == null) {
                 RainAndWaterFragment rainAndWaterFragment =
@@ -72,7 +71,7 @@ public class StationDetailsActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.rain_frame_layout, rainAndWaterFragment, RAIN_FRAGMENT_TAG);
             }
         }
-        if (station.isWater()) {
+        if (station.hasWater()) {
             Fragment waterFragment = fragmentManager.findFragmentByTag(WATER_FRAGMENT_TAG);
             if (waterFragment == null) {
                 RainAndWaterFragment rainAndWaterFragment =
@@ -80,7 +79,7 @@ public class StationDetailsActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.water_frame_layout, rainAndWaterFragment, WATER_FRAGMENT_TAG);
             }
         }
-        if (station.isWinddir()) {
+        if (station.hasWindDir()) {
             Fragment fragment = fragmentManager.findFragmentByTag(WIND_DIRECTION_FRAGMENT_TAG);
             if (fragment == null) {
                 Bundle bundle = createBundle(stationNumber);
@@ -89,7 +88,7 @@ public class StationDetailsActivity extends AppCompatActivity
                 fragmentTransaction.replace(R.id.wind_direction_frame_layout, windDirectionFragment, WIND_DIRECTION_FRAGMENT_TAG);
             }
         }
-        if (station.isWindlevel()) {
+        if (station.hasWindLevel()) {
             Fragment fragment = fragmentManager.findFragmentByTag(WIND_LEVEL_FRAGMENT_TAG);
             if (fragment == null) {
                 Bundle bundle = createBundle(stationNumber);

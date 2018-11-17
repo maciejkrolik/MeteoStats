@@ -114,11 +114,13 @@ public class WindLevelFragment extends Fragment {
 
                     adapter.notifyDataSetChanged();
 
-                    Animation animation = new Animation();
-                    Paint paint = new Paint();
-                    lineChart.setGrid(0, lineSet.size() - 1, paint);
-                    lineChart.addData(lineSet);
-                    lineChart.show(animation);
+                    if (!lineSet.getEntries().isEmpty()) {
+                        lineChart.setGrid(0, lineSet.size() - 1, new Paint());
+                        lineChart.addData(lineSet);
+                        lineChart.show(new Animation());
+                    } else {
+                        lineChart.setVisibility(View.GONE);
+                    }
 
                 } else {
                     Toast.makeText(getActivity(),

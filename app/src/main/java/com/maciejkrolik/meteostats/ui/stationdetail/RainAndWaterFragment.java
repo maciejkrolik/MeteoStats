@@ -122,10 +122,12 @@ public class RainAndWaterFragment extends Fragment {
 
                     adapter.notifyDataSetChanged();
 
-                    Animation animation = new Animation();
-
-                    barChart.addData(barSet);
-                    barChart.show(animation);
+                    if (!barSet.getEntries().isEmpty()) {
+                        barChart.addData(barSet);
+                        barChart.show(new Animation());
+                    } else {
+                        barChart.setVisibility(View.GONE);
+                    }
 
                 } else {
                     Toast.makeText(getActivity(),

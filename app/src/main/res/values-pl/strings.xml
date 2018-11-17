@@ -20,4 +20,6 @@
     <string name="detail_direction">Kierunek</string>
     <string name="about_info">Aplikacja wykorzystuje dane z serwisu pomiary.gdanskiewody.pl</string>
     <string name="add_favorite_title">Dodaj do ulubionych</string>
+    <string name="internet_connection_error">Sprawdź swoje połączenie i spróbuj ponownie</string>
+    <string name="check_internet_button">Sprawdź</string>
 </resources>

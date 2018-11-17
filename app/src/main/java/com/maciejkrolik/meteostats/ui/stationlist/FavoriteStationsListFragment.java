@@ -16,6 +16,12 @@ public class FavoriteStationsListFragment extends StationListBaseFragment {
     private List<Station> favoriteStations;
 
     @Override
+    boolean hasInternetConnectivity() {
+        // In favorite list we use only local storage so we do not need to check internet connectivity
+        return true;
+    }
+
+    @Override
     void setupViewModel() {
         StationRepository stationRepository =
                 ((MeteoStatsApplication) getActivity().getApplication())

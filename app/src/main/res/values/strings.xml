@@ -21,4 +21,6 @@
     <string name="detail_direction">Direction</string>
     <string name="about_info">Application uses data from pomiary.gdanskiewody.pl</string>
     <string name="add_favorite_title">Add to favorite</string>
+    <string name="internet_connection_error">Check your connection and try again</string>
+    <string name="check_internet_button">Check</string>
 </resources>

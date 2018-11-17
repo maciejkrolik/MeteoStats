@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,10 +38,11 @@ public abstract class StationListBaseFragment extends Fragment
             "com.maciejkrolik.meteostats.ui.stationlist.EXTRA_STATION";
     private static final String FILTER_DIALOG_TAG = "FILTER_DIALOG_TAG";
 
-    private ProgressBar progressBar;
+    ProgressBar progressBar;
+    TextView infoTextView;
+    Button checkButton;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private TextView infoTextView;
 
     private List<Station> stations;
     private final List<Station> visibleStations = new ArrayList<>();
@@ -57,6 +59,7 @@ public abstract class StationListBaseFragment extends Fragment
 
         progressBar = rootView.findViewById(R.id.stations_progress_bar);
         infoTextView = rootView.findViewById(R.id.info_text_view);
+        checkButton = rootView.findViewById(R.id.check_internet_button);
         recyclerView = rootView.findViewById(R.id.stations_recycler_view);
 
         recyclerView.setHasFixedSize(true);
@@ -65,6 +68,17 @@ public abstract class StationListBaseFragment extends Fragment
         adapter = new StationListAdapter(visibleStations, this);
         recyclerView.setAdapter(adapter);
 
+        checkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hasInternetConnectivity()) {
+                    checkButton.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                    setupViewModel();
+                }
+            }
+        });
+
         return rootView;
     }
 
@@ -72,20 +86,26 @@ public abstract class StationListBaseFragment extends Fragment
     public final void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setupViewModel();
+        if (hasInternetConnectivity()) {
+            setupViewModel();
+        }
     }
+
+    abstract boolean hasInternetConnectivity();
 
     abstract void setupViewModel();
 
     final void setupChosenStations() {
-        progressBar.setVisibility(View.GONE);
-
         stations = getChosenStations();
 
-        visibleStations.clear();
-        visibleStations.addAll(filterChosenStations(stations));
+        if (stations != null) {
+            progressBar.setVisibility(View.GONE);
 
-        setVisibilityOfTheList();
+            visibleStations.clear();
+            visibleStations.addAll(filterChosenStations(stations));
+
+            setVisibilityOfTheList();
+        }
     }
 
     abstract List<Station> getChosenStations();
@@ -165,27 +185,30 @@ public abstract class StationListBaseFragment extends Fragment
     }
 
     final void searchStationList(String text) {
-        visibleStations.clear();
+        if (stations != null) {
+            visibleStations.clear();
 
-        List<Station> filteredStations = new ArrayList<>(filterChosenStations(stations));
+            List<Station> filteredStations = new ArrayList<>(filterChosenStations(stations));
 
-        if (text.isEmpty()) {
-            visibleStations.addAll(filteredStations);
-        } else {
-            text = text.toLowerCase();
-            for (Station station : filteredStations) {
-                if (station.getName().toLowerCase().contains(text)) {
-                    visibleStations.add(station);
+            if (text.isEmpty()) {
+                visibleStations.addAll(filteredStations);
+            } else {
+                text = text.toLowerCase();
+                for (Station station : filteredStations) {
+                    if (station.getName().toLowerCase().contains(text)) {
+                        visibleStations.add(station);
+                    }
                 }
             }
-        }
 
-        setVisibilityOfTheList();
+            setVisibilityOfTheList();
+        }
     }
 
     private void setVisibilityOfTheList() {
         if (visibleStations.isEmpty()) {
             recyclerView.setVisibility(View.GONE);
+            infoTextView.setText(R.string.info_no_stations);
             infoTextView.setVisibility(View.VISIBLE);
         } else {
             infoTextView.setVisibility(View.GONE);

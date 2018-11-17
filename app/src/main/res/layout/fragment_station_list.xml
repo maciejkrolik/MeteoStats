@@ -3,31 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/stations_progress_bar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="55dp" />
-
-    <TextView
-        android:id="@+id/info_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="30dp"
-        android:text="@string/info_no_stations"
-        android:visibility="gone" />
-
-    <Button
-        android:id="@+id/check_internet_button"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="55dp"
-        android:text="@string/check_internet_button"
-        android:visibility="gone" />
+    <include layout="@layout/connectivity_layout" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/stations_recycler_view"

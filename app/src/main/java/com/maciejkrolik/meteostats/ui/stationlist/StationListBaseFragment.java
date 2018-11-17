@@ -57,8 +57,8 @@ public abstract class StationListBaseFragment extends Fragment
 
         setHasOptionsMenu(true);
 
-        progressBar = rootView.findViewById(R.id.stations_progress_bar);
-        infoTextView = rootView.findViewById(R.id.info_text_view);
+        progressBar = rootView.findViewById(R.id.connectivity_progress_bar);
+        infoTextView = rootView.findViewById(R.id.connectivity_text_view);
         checkButton = rootView.findViewById(R.id.check_internet_button);
         recyclerView = rootView.findViewById(R.id.stations_recycler_view);
 

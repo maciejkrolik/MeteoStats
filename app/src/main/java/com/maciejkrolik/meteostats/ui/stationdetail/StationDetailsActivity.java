@@ -11,13 +11,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.maciejkrolik.meteostats.MeteoStatsApplication;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.StationRepository;
 import com.maciejkrolik.meteostats.data.model.Station;
 import com.maciejkrolik.meteostats.ui.stationlist.StationListBaseFragment;
+import com.maciejkrolik.meteostats.util.NetworkUtils;
 import com.maciejkrolik.meteostats.util.StringUtils;
 
 import java.lang.ref.WeakReference;
@@ -47,6 +51,10 @@ public class StationDetailsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_station_details);
 
+        View connectivityLayout = findViewById(R.id.connectivity_layout);
+        ProgressBar connectivityProgressBar = findViewById(R.id.connectivity_progress_bar);
+        TextView connectivityTextView = findViewById(R.id.connectivity_text_view);
+
         Intent intent = getIntent();
         station = intent.getParcelableExtra(StationListBaseFragment.EXTRA_STATION);
         final int stationNumber = station.getNo();
@@ -58,46 +66,53 @@ public class StationDetailsActivity extends AppCompatActivity
                 .getApplicationComponent()
                 .getStationRepository();
 
-        new CheckFavoriteTask(this).execute(stationNumber);
+        if (NetworkUtils.isConnected(this)) {
+            new CheckFavoriteTask(this).execute(stationNumber);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if (station.hasRain()) {
-            Fragment rainFragment = fragmentManager.findFragmentByTag(RAIN_FRAGMENT_TAG);
-            if (rainFragment == null) {
-                RainAndWaterFragment rainAndWaterFragment =
-                        createRainAndWaterFragment(stationNumber, "rain");
-                fragmentTransaction.replace(R.id.rain_frame_layout, rainAndWaterFragment, RAIN_FRAGMENT_TAG);
+            if (station.hasRain()) {
+                Fragment rainFragment = fragmentManager.findFragmentByTag(RAIN_FRAGMENT_TAG);
+                if (rainFragment == null) {
+                    RainAndWaterFragment rainAndWaterFragment =
+                            createRainAndWaterFragment(stationNumber, "rain");
+                    fragmentTransaction.replace(R.id.rain_frame_layout, rainAndWaterFragment, RAIN_FRAGMENT_TAG);
+                }
             }
-        }
-        if (station.hasWater()) {
-            Fragment waterFragment = fragmentManager.findFragmentByTag(WATER_FRAGMENT_TAG);
-            if (waterFragment == null) {
-                RainAndWaterFragment rainAndWaterFragment =
-                        createRainAndWaterFragment(stationNumber, "water");
-                fragmentTransaction.replace(R.id.water_frame_layout, rainAndWaterFragment, WATER_FRAGMENT_TAG);
+            if (station.hasWater()) {
+                Fragment waterFragment = fragmentManager.findFragmentByTag(WATER_FRAGMENT_TAG);
+                if (waterFragment == null) {
+                    RainAndWaterFragment rainAndWaterFragment =
+                            createRainAndWaterFragment(stationNumber, "water");
+                    fragmentTransaction.replace(R.id.water_frame_layout, rainAndWaterFragment, WATER_FRAGMENT_TAG);
+                }
             }
-        }
-        if (station.hasWindDir()) {
-            Fragment fragment = fragmentManager.findFragmentByTag(WIND_DIRECTION_FRAGMENT_TAG);
-            if (fragment == null) {
-                Bundle bundle = createBundle(stationNumber);
-                WindDirectionFragment windDirectionFragment = new WindDirectionFragment();
-                windDirectionFragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.wind_direction_frame_layout, windDirectionFragment, WIND_DIRECTION_FRAGMENT_TAG);
+            if (station.hasWindDir()) {
+                Fragment fragment = fragmentManager.findFragmentByTag(WIND_DIRECTION_FRAGMENT_TAG);
+                if (fragment == null) {
+                    Bundle bundle = createBundle(stationNumber);
+                    WindDirectionFragment windDirectionFragment = new WindDirectionFragment();
+                    windDirectionFragment.setArguments(bundle);
+                    fragmentTransaction.replace(R.id.wind_direction_frame_layout, windDirectionFragment, WIND_DIRECTION_FRAGMENT_TAG);
+                }
             }
-        }
-        if (station.hasWindLevel()) {
-            Fragment fragment = fragmentManager.findFragmentByTag(WIND_LEVEL_FRAGMENT_TAG);
-            if (fragment == null) {
-                Bundle bundle = createBundle(stationNumber);
-                WindLevelFragment windLevelFragment = new WindLevelFragment();
-                windLevelFragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.wind_level_frame_layout, windLevelFragment, WIND_LEVEL_FRAGMENT_TAG);
+            if (station.hasWindLevel()) {
+                Fragment fragment = fragmentManager.findFragmentByTag(WIND_LEVEL_FRAGMENT_TAG);
+                if (fragment == null) {
+                    Bundle bundle = createBundle(stationNumber);
+                    WindLevelFragment windLevelFragment = new WindLevelFragment();
+                    windLevelFragment.setArguments(bundle);
+                    fragmentTransaction.replace(R.id.wind_level_frame_layout, windLevelFragment, WIND_LEVEL_FRAGMENT_TAG);
+                }
             }
+            fragmentTransaction.commit();
+
+        } else {
+            connectivityProgressBar.setVisibility(View.GONE);
+            connectivityLayout.setVisibility(View.VISIBLE);
+            connectivityTextView.setVisibility(View.VISIBLE);
         }
-        fragmentTransaction.commit();
     }
 
     private RainAndWaterFragment createRainAndWaterFragment(int stationNumber, String measurementSymbol) {

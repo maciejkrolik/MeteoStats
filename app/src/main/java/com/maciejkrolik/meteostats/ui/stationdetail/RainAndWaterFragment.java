@@ -99,7 +99,7 @@ public class RainAndWaterFragment extends Fragment {
         viewModel.getMeasurementsList().observe(this, new Observer<StationMeasurementsList>() {
             @Override
             public void onChanged(@Nullable StationMeasurementsList measurementsList) {
-                if (measurementsList != null) {
+                if (measurementsList != null && measurementsList.getData() != null) {
                     BarSet barSet = new BarSet();
 
                     measurementValues.add("[mm]");
@@ -129,14 +129,21 @@ public class RainAndWaterFragment extends Fragment {
                         barChart.setVisibility(View.GONE);
                     }
 
+                    progressBar.setVisibility(View.GONE);
+                    weatherDataLayout.setVisibility(View.VISIBLE);
+
                 } else {
+                    progressBar.setVisibility(View.GONE);
+
+                    if (measurementsList != null) {
+                        Toast.makeText(getActivity(),
+                                R.string.retrofit_station_error_message,
+                                Toast.LENGTH_LONG).show();
+                    }
                     Toast.makeText(getActivity(),
                             R.string.retrofit_data_error_message,
                             Toast.LENGTH_SHORT).show();
                 }
-
-                progressBar.setVisibility(View.GONE);
-                weatherDataLayout.setVisibility(View.VISIBLE);
             }
         });
     }

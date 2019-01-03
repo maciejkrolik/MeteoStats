@@ -23,4 +23,5 @@
     <string name="add_favorite_title">Add to favorite</string>
     <string name="internet_connection_error">Check your connection and try again</string>
     <string name="check_internet_button">Check</string>
+    <string name="retrofit_station_error_message">Station was deleted from the service!</string>
 </resources>

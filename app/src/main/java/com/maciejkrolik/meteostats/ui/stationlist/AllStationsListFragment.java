@@ -21,7 +21,7 @@ public class AllStationsListFragment extends StationListBaseFragment {
     private List<Station> allStations;
 
     @Override
-    void setupActivityTitle() {
+    void setActivityTitle() {
         if (getActivity() != null) {
             getActivity().setTitle(R.string.nav_all_stations);
         }

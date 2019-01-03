@@ -47,7 +47,7 @@ public abstract class StationListBaseFragment extends Fragment
     private List<Station> stations;
     private final List<Station> visibleStations = new ArrayList<>();
 
-    abstract void setupActivityTitle();
+    abstract void setActivityTitle();
 
     abstract boolean hasInternetConnectivity();
 
@@ -65,7 +65,7 @@ public abstract class StationListBaseFragment extends Fragment
 
         setHasOptionsMenu(true);
 
-        setupActivityTitle();
+        setActivityTitle();
 
         progressBar = rootView.findViewById(R.id.connectivity_progress_bar);
         infoTextView = rootView.findViewById(R.id.connectivity_text_view);

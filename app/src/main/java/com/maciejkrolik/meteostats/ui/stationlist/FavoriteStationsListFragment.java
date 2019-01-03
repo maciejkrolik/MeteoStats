@@ -19,7 +19,7 @@ public class FavoriteStationsListFragment extends StationListBaseFragment {
     private List<Station> favoriteStations;
 
     @Override
-    void setupActivityTitle() {
+    void setActivityTitle() {
         if (getActivity() != null) {
             getActivity().setTitle(R.string.nav_favorite_stations);
         }

@@ -85,7 +85,7 @@ public class WindDirectionFragment extends Fragment {
         viewModel.getMeasurementsList().observe(this, new Observer<StationMeasurementsList>() {
             @Override
             public void onChanged(@Nullable StationMeasurementsList measurementsList) {
-                if (measurementsList != null) {
+                if (measurementsList != null && measurementsList.getData() != null) {
                     measurementValues.add(getResources().getString(R.string.detail_direction));
                     measurementTimes.add(getResources().getString(R.string.detail_time));
 
@@ -105,14 +105,21 @@ public class WindDirectionFragment extends Fragment {
 
                     adapter.notifyDataSetChanged();
 
+                    progressBar.setVisibility(View.GONE);
+                    weatherDataLayout.setVisibility(View.VISIBLE);
+
                 } else {
+                    progressBar.setVisibility(View.GONE);
+
+                    if (measurementsList != null) {
+                        Toast.makeText(getActivity(),
+                                R.string.retrofit_station_error_message,
+                                Toast.LENGTH_LONG).show();
+                    }
                     Toast.makeText(getActivity(),
                             R.string.retrofit_data_error_message,
                             Toast.LENGTH_SHORT).show();
                 }
-
-                progressBar.setVisibility(View.GONE);
-                weatherDataLayout.setVisibility(View.VISIBLE);
             }
         });
     }

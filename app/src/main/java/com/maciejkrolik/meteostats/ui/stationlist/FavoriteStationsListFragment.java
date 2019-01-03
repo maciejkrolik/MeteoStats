@@ -6,14 +6,24 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.maciejkrolik.meteostats.MeteoStatsApplication;
+import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.StationRepository;
 import com.maciejkrolik.meteostats.data.model.Station;
+import com.maciejkrolik.meteostats.ui.stationlist.viewmodel.FavoriteStationsViewModel;
+import com.maciejkrolik.meteostats.ui.stationlist.viewmodel.StationListViewModelFactory;
 
 import java.util.List;
 
 public class FavoriteStationsListFragment extends StationListBaseFragment {
 
     private List<Station> favoriteStations;
+
+    @Override
+    void setupActivityTitle() {
+        if (getActivity() != null) {
+            getActivity().setTitle(R.string.nav_favorite_stations);
+        }
+    }
 
     @Override
     boolean hasInternetConnectivity() {

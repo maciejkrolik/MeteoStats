@@ -1,4 +1,4 @@
-package com.maciejkrolik.meteostats.ui.stationlist;
+package com.maciejkrolik.meteostats.ui.stationlist.viewmodel;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;

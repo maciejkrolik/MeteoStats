@@ -10,6 +10,8 @@ import com.maciejkrolik.meteostats.MeteoStatsApplication;
 import com.maciejkrolik.meteostats.R;
 import com.maciejkrolik.meteostats.data.StationRepository;
 import com.maciejkrolik.meteostats.data.model.Station;
+import com.maciejkrolik.meteostats.ui.stationlist.viewmodel.AllStationsViewModel;
+import com.maciejkrolik.meteostats.ui.stationlist.viewmodel.StationListViewModelFactory;
 import com.maciejkrolik.meteostats.util.NetworkUtils;
 
 import java.util.List;
@@ -17,6 +19,13 @@ import java.util.List;
 public class AllStationsListFragment extends StationListBaseFragment {
 
     private List<Station> allStations;
+
+    @Override
+    void setupActivityTitle() {
+        if (getActivity() != null) {
+            getActivity().setTitle(R.string.nav_all_stations);
+        }
+    }
 
     @Override
     boolean hasInternetConnectivity() {

@@ -47,6 +47,14 @@ public abstract class StationListBaseFragment extends Fragment
     private List<Station> stations;
     private final List<Station> visibleStations = new ArrayList<>();
 
+    abstract void setupActivityTitle();
+
+    abstract boolean hasInternetConnectivity();
+
+    abstract void setupViewModel();
+
+    abstract List<Station> getChosenStations();
+
     public StationListBaseFragment() {
     }
 
@@ -56,6 +64,8 @@ public abstract class StationListBaseFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_station_list, container, false);
 
         setHasOptionsMenu(true);
+
+        setupActivityTitle();
 
         progressBar = rootView.findViewById(R.id.connectivity_progress_bar);
         infoTextView = rootView.findViewById(R.id.connectivity_text_view);
@@ -91,10 +101,6 @@ public abstract class StationListBaseFragment extends Fragment
         }
     }
 
-    abstract boolean hasInternetConnectivity();
-
-    abstract void setupViewModel();
-
     final void setupChosenStations() {
         stations = getChosenStations();
 
@@ -107,8 +113,6 @@ public abstract class StationListBaseFragment extends Fragment
             setVisibilityOfTheList();
         }
     }
-
-    abstract List<Station> getChosenStations();
 
     private List<Station> filterChosenStations(List<Station> allStations) {
         Set<Station> chosenStations = new HashSet<>();

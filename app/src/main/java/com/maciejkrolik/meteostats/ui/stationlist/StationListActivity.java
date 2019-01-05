@@ -92,8 +92,6 @@ public class StationListActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-//        } else if (!searchView.isIconified()) {
-//            searchView.setIconified(true);
         } else {
             super.onBackPressed();
         }

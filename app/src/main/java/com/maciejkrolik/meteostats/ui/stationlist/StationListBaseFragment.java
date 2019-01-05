@@ -140,8 +140,8 @@ public abstract class StationListBaseFragment extends Fragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.station_list, menu);
-        MenuItem item = menu.findItem(R.id.action_search_list);
-        SearchView searchView = (SearchView) item.getActionView();
+        final MenuItem item = menu.findItem(R.id.action_search_list);
+        final SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -153,6 +153,16 @@ public abstract class StationListBaseFragment extends Fragment
             public boolean onQueryTextChange(String newText) {
                 searchStationList(newText);
                 return false;
+            }
+        });
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean queryTextFocused) {
+                if (!queryTextFocused) {
+                    item.collapseActionView();
+                    searchView.setQuery("", false);
+                    searchView.setIconified(true);
+                }
             }
         });
         super.onCreateOptionsMenu(menu, inflater);

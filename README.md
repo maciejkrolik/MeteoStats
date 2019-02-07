@@ -4,10 +4,9 @@ Application was written in MVVM pattern.
 
 #### Used technologies: 
 * Java,
-* Android Architecture Components (LiveData, ViewModels), 
+* Android Architecture Components (LiveData, ViewModels, Room), 
 * Retrofit 2, 
 * WilliamChart, 
-* Room, 
 * Dagger 2
 
 ![meteostats first screenshot](https://xe3zaa.db.files.1drv.com/y4mjUy5Aqx5URvrJ-TAG2Z8rHwk9mRtZyuKilfsiJU0RWcrvNT3UkwbI7LIQtzRXJkmHf_8MYySah7J_Lv7TwBaa6mZf21a7NNWk9a-bRDBALcuBfX0S9qN615AD3C7Ah88FHoaIFUtFieD6TrdqP1NRi9Tyt2W_tvlDTT_5a42Sru5wtXkokT6Mp-qdmSnHvfIeoA1VuRuQ97AniOe1ac4yw?width=371&height=660&cropmode=none)  ![meteostats second screenshot](https://v03ekw.db.files.1drv.com/y4mISF_9MIfFqTs1Mn9yhCftF6imWdFqWXC4KkpyJ34HJBhSZUc-s-vtY-45EpdZlkJxHqR0RAy04gHQiur9vZsNUSYDcswtZQasOnkRx2DXbzZcBcCwZBqbvlxpAFfLHSCkVvS95zDoXMs6KAu4QjdPtZ5Syw0FtWXLS6EfwT9ZvGXr9ms32U8g29EEmHnZ7rasAspJsgZZ21lD8SgUf6yWA?width=371&height=660&cropmode=none)
